@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_grey_900"
+    android:orientation="vertical"
+    tools:context=".IngredientEntryActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/blue_grey_700">
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="32dp"
+            android:hint="Ingredient" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Food Allergies/Dietary Restrictions:"
+            android:id="@+id/textView"
+            android:layout_marginBottom="178dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/editText" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peanuts"
+            android:id="@+id/checkBox"
+            android:layout_alignTop="@+id/textView"
+            android:layout_alignStart="@+id/textView"
+            android:layout_marginTop="28dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shellfish"
+            android:id="@+id/checkBox3"
+            android:layout_below="@+id/checkBox"
+            android:layout_alignStart="@+id/checkBox" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milk"
+            android:id="@+id/checkBox4"
+            android:layout_below="@+id/checkBox3"
+            android:layout_alignStart="@+id/checkBox3" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gluten"
+            android:id="@+id/checkBox5"
+            android:layout_below="@+id/checkBox4"
+            android:layout_alignStart="@+id/checkBox4" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wheat"
+            android:id="@+id/checkBox6"
+            android:layout_alignTop="@+id/checkBox"
+            android:layout_alignEnd="@+id/textView" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soy"
+            android:id="@+id/checkBox7"
+            android:layout_below="@+id/checkBox6"
+            android:layout_alignStart="@+id/checkBox6" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:id="@+id/checkBox8"
+            android:layout_alignBottom="@+id/checkBox5"
+            android:layout_alignStart="@+id/checkBox7" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cuisine_spinner"
+            android:spinnerMode="dropdown"
+            android:clickable="false"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eggs"
+            android:id="@+id/checkBox2"
+            android:layout_below="@+id/checkBox7"
+            android:layout_alignStart="@+id/checkBox7" />
+    </RelativeLayout>
+
+</LinearLayout>
+
+
