@@ -96,7 +96,7 @@
             android:id="@+id/cuisine_spinner"
             android:spinnerMode="dropdown"
             android:clickable="false"
-            android:layout_centerVertical="true"
+            android:layout_above="@+id/textView"
             android:layout_alignParentStart="true" />
 
         <CheckBox
@@ -106,6 +106,15 @@
             android:id="@+id/checkBox2"
             android:layout_below="@+id/checkBox7"
             android:layout_alignStart="@+id/checkBox7" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find Recipes"
+            android:id="@+id/button"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 </LinearLayout>

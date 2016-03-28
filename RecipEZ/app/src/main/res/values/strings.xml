@@ -20,7 +20,7 @@
 
     <!-- Ingredient and other info entry messages -->
     <string name="ingredient">Ingredient</string>
-    <string-array name="cuisine-array">
+    <string-array name="cuisine_array">
         <item>Mexican</item>
         <item>Italian</item>
         <item>Chinese</item>

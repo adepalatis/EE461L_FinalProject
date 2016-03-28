@@ -41,7 +41,11 @@ public class GoogleLoginActivity extends AppCompatActivity implements
         mStatusTextView = (TextView) findViewById(R.id.status);
 
         // Button listeners
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        try {
+            findViewById(R.id.sign_in_button).setOnClickListener(this);
+        } catch(Exception e){
+
+        }
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
