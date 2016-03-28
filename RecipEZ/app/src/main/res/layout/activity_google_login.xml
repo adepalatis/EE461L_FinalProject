@@ -30,7 +30,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/signed_out"
+            android:text="@string/signed_in"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_out"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
+                android:theme="@style/ThemeOverlay.MyDarkButton"
+                android:onClick="signOut" />
 
             <Button
                 android:id="@+id/disconnect_button"
