@@ -22,6 +22,7 @@
     <!-- Ingredient and other info entry messages -->
     <string name="ingredient">Ingredient</string>
     <string-array name="cuisine_array">
+        <item>All</item>
         <item>Mexican</item>
         <item>Italian</item>
         <item>Chinese</item>
@@ -53,4 +54,6 @@
     <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
 
     <string name="server_client_id">185165070366-e38bbciadoo3rk8f5gofl1jc32m1efvv.apps.googleusercontent.com</string>
+
+    <string name="test_string">Hello, world!</string>
 </resources>
