@@ -169,4 +169,5 @@ public class GoogleLoginActivity extends AppCompatActivity implements
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
         }
     }
+
 }

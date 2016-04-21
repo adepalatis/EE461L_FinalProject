@@ -13,8 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -23,9 +21,10 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
 
     private Spinner cuisineSpinner;
     private EditText ingredientEntryBox;
-    private GridView selectedIngredients;
-    private Button findRecipesButton;
-    private Button addIngredientButton;
+    private GridView selectedIngredientsView;
+    private Button searchButton;
+    private Button addButton;
+    private ArrayList<CharSequence> ingredientsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,32 +32,37 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_ingredient_entry);
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
-        cuisineSpinner = (Spinner)findViewById(R.id.cuisine_spinner);
+        cuisineSpinner = (Spinner)findViewById(R.id.cuisineSpinner);
         ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
-        selectedIngredients = (GridView)findViewById(R.id.gridView);
-        findRecipesButton = (Button)findViewById(R.id.findRecipesButton);
-        addIngredientButton = (Button)findViewById(R.id.addIngredientButton);
+        selectedIngredientsView = (GridView)findViewById(R.id.selectedIngredientsGrid);
+        searchButton = (Button)findViewById(R.id.searchButton);
+        addButton = (Button)findViewById(R.id.addButton);
+        ingredientsList = new ArrayList<CharSequence>();
 
         // Configure listeners
         try {
-            findRecipesButton.setOnClickListener(this);
-            addIngredientButton.setOnClickListener(this);
+            searchButton.setOnClickListener(this);
+            addButton.setOnClickListener(this);
             cuisineSpinner.setOnItemSelectedListener(this);
         } catch(Exception e) {
             System.err.println(e.toString());
         }
 
+        // Configure the selected ingredients adapter
+        ArrayAdapter<CharSequence> ingredientsAdapter = new ArrayAdapter<CharSequence>(this, R.layout.activity_show_recipes, R.id.selectedIngredientsGrid, ingredientsList);
+        selectedIngredientsView.setAdapter(ingredientsAdapter);
+
         // Configure the cuisine spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cuisineSpinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
+        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cuisineSpinner.setAdapter(cuisineAdapter);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         CharSequence selectedCuisine = (CharSequence)parent.getItemAtPosition(pos);
         if(selectedCuisine.toString().equals("Chinese")) {
-            ((Button) findViewById(R.id.findRecipesButton)).setText(R.string.test_string);
+            ((Button) findViewById(R.id.searchButton)).setText(R.string.test_string);
         }
     }
 
@@ -70,20 +74,32 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.findRecipesButton:
+            case R.id.searchButton:
                 startActivity(new Intent(this, ShowRecipesActivity.class));
                 break;
 
-            case R.id.addIngredientButton:
+            case R.id.addButton:
+//                ((Button) findViewById(R.id.searchButton)).setText(ingredientEntryBox.getText());
                 addIngredientToGrid(ingredientEntryBox.getText());
                 break;
         }
     }
 
     public void addIngredientToGrid(CharSequence ingredient) {
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, R.layout.activity_show_recipes);
-        adapter.add(ingredient);
-        selectedIngredients.setAdapter(adapter);
+        ArrayList<CharSequence> newIngredients = new ArrayList<CharSequence>(ingredientsList);
+        newIngredients.add(ingredient);
+        ingredientsList = newIngredients;
+        ArrayAdapter<CharSequence> mAdapter = (ArrayAdapter<CharSequence>)selectedIngredientsView.getAdapter();
+
+//        mAdapter.clear();
+//        mAdapter.notifyDataSetChanged();
+//        mAdapter.addAll(ingredientsList);
+//
+        mAdapter.notifyDataSetChanged();
+
+        String countTest = ((Integer)mAdapter.getCount()).toString();
+        String count2Test = ((Integer)ingredientsList.size()).toString();
+        ((Button) findViewById(R.id.searchButton)).setText(countTest);
     }
 
 }

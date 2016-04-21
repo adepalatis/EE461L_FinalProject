@@ -29,9 +29,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Food Allergies/Dietary Restrictions:"
             android:id="@+id/textView"
-            android:layout_marginBottom="178dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/editText" />
+            android:layout_below="@+id/cuisineSpinner"
+            android:layout_centerHorizontal="true" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -93,10 +92,10 @@
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cuisine_spinner"
+            android:id="@+id/cuisineSpinner"
             android:spinnerMode="dropdown"
             android:clickable="false"
-            android:layout_above="@+id/textView"
+            android:layout_centerVertical="true"
             android:layout_alignParentStart="true" />
 
         <CheckBox
@@ -111,14 +110,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find Recipes"
-            android:id="@+id/findRecipesButton"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/searchButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/checkBox8" />
 
         <GridView
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:id="@+id/gridView"
+            android:id="@+id/selectedIngredientsGrid"
             android:layout_below="@+id/ingredientEntryBox"
             android:layout_marginTop="4dp"
             android:layout_alignParentStart="true" />
@@ -127,10 +126,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
-            android:id="@+id/addIngredientButton"
-            android:layout_above="@+id/gridView"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/textView" />
+            android:id="@+id/addButton"
+            android:layout_alignBottom="@+id/ingredientEntryBox"
+            android:layout_toEndOf="@+id/ingredientEntryBox" />
 
     </RelativeLayout>
 
