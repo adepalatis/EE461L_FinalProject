@@ -48,10 +48,6 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
             System.err.println(e.toString());
         }
 
-        // Configure the selected ingredients adapter
-        ArrayAdapter<CharSequence> ingredientsAdapter = new ArrayAdapter<CharSequence>(this, R.layout.activity_show_recipes, R.id.selectedIngredientsGrid, ingredientsList);
-        selectedIngredientsView.setAdapter(ingredientsAdapter);
-
         // Configure the cuisine spinner
         ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
         cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,20 +82,14 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
     }
 
     public void addIngredientToGrid(CharSequence ingredient) {
-        ArrayList<CharSequence> newIngredients = new ArrayList<CharSequence>(ingredientsList);
-        newIngredients.add(ingredient);
-        ingredientsList = newIngredients;
-        ArrayAdapter<CharSequence> mAdapter = (ArrayAdapter<CharSequence>)selectedIngredientsView.getAdapter();
+        ingredientsList.add(ingredient);
+        TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
+        selectedIngredientsView.setAdapter(ingredientsAdapter);
+        ingredientsAdapter.notifyDataSetChanged();
 
-//        mAdapter.clear();
-//        mAdapter.notifyDataSetChanged();
-//        mAdapter.addAll(ingredientsList);
-//
-        mAdapter.notifyDataSetChanged();
-
-        String countTest = ((Integer)mAdapter.getCount()).toString();
+        String countTest = ((Integer)ingredientsAdapter.getCount()).toString();
         String count2Test = ((Integer)ingredientsList.size()).toString();
-        ((Button) findViewById(R.id.searchButton)).setText(countTest);
+        ((Button)findViewById(R.id.searchButton)).setText(ingredient);
     }
 
 }
