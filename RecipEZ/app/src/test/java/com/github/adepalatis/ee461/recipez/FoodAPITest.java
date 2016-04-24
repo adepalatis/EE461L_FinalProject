@@ -40,7 +40,7 @@ public class FoodAPITest {
     @Test
     public void getRecipe() throws Exception {
         FoodAPI api = FoodAPI.getInstance();
-        List<RecipeSearchResult> res = api.searchRecipes(null, null, null, null, null, 2, null, "taco", null);
+        List<RecipeSearchResult> res = api.searchRecipes(null, null, null, null, null, 2, null, "pasta", null);
         Recipe r = api.getRecipe(res.get(0).id, true);
         System.out.println(r);
     }
