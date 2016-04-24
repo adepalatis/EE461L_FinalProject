@@ -9,15 +9,15 @@ import android.widget.ExpandableListView;
  */
 public class ShowRecipesActivity extends AppCompatActivity {
 
-    private ExpandableListView recipes;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_recipes);
 
-        // Initialize list of search results
-        recipes = (ExpandableListView)findViewById(R.id.expandableListView);
+        Bundle data = getIntent().getExtras();
+        if (data != null) {
+            
+        }
     }
 
 }
