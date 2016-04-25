@@ -1,6 +1,7 @@
 package com.github.adepalatis.ee461.recipez;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,27 +24,23 @@ public class TextViewAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View gridView;
 
         if (convertView == null) {
-
             gridView = new View(context);
 
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.ingredient, null);
 
             // set value into textview
-            TextView textView = (TextView) gridView
-                    .findViewById(R.id.grid_item_label);
+            TextView textView = (TextView) gridView.findViewById(R.id.grid_item_label);
             textView.setText(textViewValues.get(position));
         } else {
-            gridView = (View) convertView;
+            gridView = convertView;
         }
 
+        gridView.setBackgroundColor(Color.RED);
         return gridView;
     }
 
@@ -54,7 +51,7 @@ public class TextViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return textViewValues.get(position);
     }
 
     @Override

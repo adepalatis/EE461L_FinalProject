@@ -75,17 +75,22 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
                 break;
 
             case R.id.addButton:
-//                ((Button) findViewById(R.id.searchButton)).setText(ingredientEntryBox.getText());
                 addIngredientToGrid(ingredientEntryBox.getText().toString());
                 break;
         }
     }
 
     public void addIngredientToGrid(CharSequence ingredient) {
-        ingredientsList.add(ingredient);
-        TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
-        selectedIngredientsView.setAdapter(ingredientsAdapter);
-        ingredientsAdapter.notifyDataSetChanged();
+        // Make sure "ingredient" has not already been entered
+        if(!ingredientsList.contains(ingredient) && ingredient.length() != 0) {
+            // Add "ingredient" to the list
+            ingredientsList.add(ingredient);
+
+            // Create a new adapater with the updated "ingredientsList"
+            TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
+            selectedIngredientsView.setAdapter(ingredientsAdapter);
+            ingredientsAdapter.notifyDataSetChanged();
+        }
     }
 
 }
