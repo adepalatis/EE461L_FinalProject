@@ -119,6 +119,7 @@
             android:layout_height="100dp"
             android:id="@+id/selectedIngredientsGrid"
             android:numColumns="4"
+            android:horizontalSpacing="10dp"
             android:scrollbars="vertical"
             android:scrollbarFadeDuration="0"
             android:layout_below="@+id/ingredientEntryBox"

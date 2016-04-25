@@ -162,7 +162,6 @@ public class GoogleLoginActivity extends AppCompatActivity implements
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 
-            //TODO: Transition to main activity
             Intent nextActivity = new Intent(this, IngredientEntryActivity.class);
             startActivity(nextActivity);
         } else {
