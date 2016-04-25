@@ -14,7 +14,7 @@
         android:background="@color/blue_grey_700">
 
         <EditText
-            android:layout_width="280dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/ingredientEntryBox"
             android:layout_alignParentTop="true"
@@ -115,14 +115,14 @@
             android:layout_toStartOf="@+id/checkBox8" />
 
         <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
             android:id="@+id/selectedIngredientsGrid"
-            android:layout_below="@+id/ingredientEntryBox"
-            android:layout_marginTop="4dp"
-            android:layout_alignParentStart="true"
             android:numColumns="5"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="0"
+            android:layout_below="@+id/ingredientEntryBox"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
             android:text="Add"
             android:id="@+id/addButton"
             android:layout_alignBottom="@+id/ingredientEntryBox"
-            android:layout_toEndOf="@+id/ingredientEntryBox" />
+            android:layout_alignStart="@+id/checkBox6" />
 
     </RelativeLayout>
 

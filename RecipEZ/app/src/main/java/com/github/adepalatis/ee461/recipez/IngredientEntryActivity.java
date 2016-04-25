@@ -76,7 +76,7 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
 
             case R.id.addButton:
 //                ((Button) findViewById(R.id.searchButton)).setText(ingredientEntryBox.getText());
-                addIngredientToGrid(ingredientEntryBox.getText());
+                addIngredientToGrid(ingredientEntryBox.getText().toString());
                 break;
         }
     }
@@ -86,10 +86,6 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
         selectedIngredientsView.setAdapter(ingredientsAdapter);
         ingredientsAdapter.notifyDataSetChanged();
-
-        String countTest = ((Integer)ingredientsAdapter.getCount()).toString();
-        String count2Test = ((Integer)ingredientsList.size()).toString();
-        ((Button)findViewById(R.id.searchButton)).setText(ingredient);
     }
 
 }
