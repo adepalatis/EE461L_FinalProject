@@ -22,13 +22,55 @@
     <!-- Ingredient and other info entry messages -->
     <string name="ingredient">Ingredient</string>
     <string-array name="cuisine_array">
-        <item>All</item>
-        <item>Mexican</item>
-        <item>Italian</item>
+        <item>Any</item>
+        <item>African</item>
         <item>Chinese</item>
-        <item>German</item>
+        <item>Japanese</item>
         <item>Korean</item>
-        <item>South American</item>
+        <item>Vietnamese</item>
+        <item>Thai</item>
+        <item>Indian</item>
+        <item>British</item>
+        <item>Irish</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Mexican</item>
+        <item>Spanish</item>
+        <item>Middle Eastern</item>
+        <item>Jewish</item>
+        <item>American</item>
+        <item>Cajun</item>
+        <item>Southern</item>
+        <item>Greek</item>
+        <item>German</item>
+        <item>Eastern European</item>
+        <item>Latin American</item>
+        <item>Caribbean</item>
+        <item>Nordic</item>
+    </string-array>
+
+    <string-array name="diet_array">
+        <item>N/A</item>
+        <item>Pescetarian</item>
+        <item>Lacto vegetarian</item>
+        <item>Ovo vegetarian</item>
+        <item>Vegetarian</item>
+        <item>Vegan</item>
+    </string-array>
+
+    <string-array name="allergy_array">
+        <item>N/A</item>
+        <item>Dairy</item>
+        <item>Egg</item>
+        <item>Gluten</item>
+        <item>Peanut</item>
+        <item>Sesame</item>
+        <item>Seafood</item>
+        <item>Shellfish</item>
+        <item>Soy</item>
+        <item>Sulfite</item>
+        <item>Tree nut</item>
+        <item>Wheat</item>
     </string-array>
 
     <!-- Google Play Services error for Toast -->

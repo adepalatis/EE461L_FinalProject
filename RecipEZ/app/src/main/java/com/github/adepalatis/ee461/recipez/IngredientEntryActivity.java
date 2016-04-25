@@ -5,6 +5,7 @@ package com.github.adepalatis.ee461.recipez;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,7 +23,15 @@ import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
 
-public class IngredientEntryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class IngredientEntryActivity extends AppCompatActivity
+        implements View.OnClickListener, AdapterView.OnItemSelectedListener, MultiSpinner.MultiSpinnerListener {
+
+    private MultiSpinner cuisines;
+    private MultiSpinner diets;
+    private MultiSpinner allergies;
+    private ArrayList<CharSequence> cuisineList;
+    private ArrayList<CharSequence> dietList;
+    private ArrayList<CharSequence> allergiesList;
 
     private Spinner cuisineSpinner;
     private EditText ingredientEntryBox;
@@ -48,12 +57,18 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_ingredient_entry);
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
-        cuisineSpinner = (Spinner)findViewById(R.id.cuisineSpinner);
+        cuisines = (MultiSpinner) findViewById(R.id.cuisineSpinner);
+        diets = (MultiSpinner) findViewById(R.id.dietSpinner);
+
+//        cuisineSpinner = (Spinner)findViewById(R.id.cuisineSpinner);
         ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
         selectedIngredientsView = (GridView)findViewById(R.id.selectedIngredientsGrid);
         searchButton = (Button)findViewById(R.id.searchButton);
         addButton = (Button)findViewById(R.id.addButton);
         ingredientsList = new ArrayList<CharSequence>();
+        cuisineList = new ArrayList<CharSequence>();
+        dietList = new ArrayList<CharSequence>();
+        allergiesList = new ArrayList<CharSequence>();
 
         // Configure listeners
         try {
@@ -67,9 +82,12 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         }
 
         // Configure the cuisine spinner
-        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
-        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cuisineSpinner.setAdapter(cuisineAdapter);
+        cuisines.setItems(getResources().getStringArray(R.array.cuisine_array), this);
+        diets.setItems(getResources().getStringArray(R.array.diet_array), this);
+
+//        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
+//        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        cuisineSpinner.setAdapter(cuisineAdapter);
 
         // Configure the google API client
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
@@ -82,6 +100,21 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
     }
 
     @Override
+    public void onItemsSelected(View v, boolean[] selected) {
+        for(int k = 0; k < selected.length; k++) {
+
+            switch (v.getId()) {
+                case R.id.cuisineSpinner:
+                    if (selected[k]) { cuisineList.add(cuisines.getItems()[k]); }
+                    break;
+                case R.id.dietSpinner:
+                    if(selected[k]) { dietList.add(diets.getItems()[k]); }
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
@@ -91,6 +124,7 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         switch(v.getId()) {
             case R.id.searchButton:
                 startActivity(new Intent(this, ShowRecipesActivity.class));
+                v.setBackgroundColor(Color.RED);
                 break;
 
             case R.id.addButton:
@@ -108,14 +142,14 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
         }
     }
 
-    public void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
+    public void signOut() {Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+            new ResultCallback<Status>() {
+                @Override
+                public void onResult(Status status) {
 
-                    }
-                });
+                }
+            });
+
     }
 
     public void addIngredientToGrid(CharSequence ingredient) {
