@@ -88,6 +88,9 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
             TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
             selectedIngredientsView.setAdapter(ingredientsAdapter);
             ingredientsAdapter.notifyDataSetChanged();
+
+            // Clear the ingredient entry field
+            ingredientEntryBox.setText("");
         }
     }
 

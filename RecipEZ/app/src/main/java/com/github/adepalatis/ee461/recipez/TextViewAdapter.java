@@ -40,7 +40,7 @@ public class TextViewAdapter extends BaseAdapter {
             gridView = convertView;
         }
 
-        gridView.setBackgroundColor(Color.RED);
+        gridView.setBackgroundColor((Color.GRAY & 0x00FFFFFF) | 0x40000000);
         return gridView;
     }
 
