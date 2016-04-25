@@ -95,7 +95,7 @@
             android:id="@+id/cuisineSpinner"
             android:spinnerMode="dropdown"
             android:clickable="false"
-            android:layout_centerVertical="true"
+            android:layout_below="@+id/selectedIngredientsGrid"
             android:layout_alignParentStart="true" />
 
         <CheckBox
@@ -111,14 +111,14 @@
             android:layout_height="wrap_content"
             android:text="Find Recipes"
             android:id="@+id/searchButton"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/checkBox8" />
+            android:layout_below="@+id/checkBox8"
+            android:layout_centerHorizontal="true" />
 
         <GridView
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:id="@+id/selectedIngredientsGrid"
-            android:numColumns="5"
+            android:numColumns="4"
             android:scrollbars="vertical"
             android:scrollbarFadeDuration="0"
             android:layout_below="@+id/ingredientEntryBox"
@@ -131,6 +131,22 @@
             android:id="@+id/addButton"
             android:layout_alignBottom="@+id/ingredientEntryBox"
             android:layout_alignStart="@+id/checkBox6" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:id="@+id/signOutButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Saved recipes"
+            android:id="@+id/savedRecipesButton"
+            android:layout_below="@+id/searchButton"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

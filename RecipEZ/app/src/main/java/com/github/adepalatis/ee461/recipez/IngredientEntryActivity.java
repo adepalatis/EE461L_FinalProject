@@ -57,9 +57,7 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         CharSequence selectedCuisine = (CharSequence)parent.getItemAtPosition(pos);
-        if(selectedCuisine.toString().equals("Chinese")) {
-            ((Button) findViewById(R.id.searchButton)).setText(R.string.test_string);
-        }
+
     }
 
     @Override
@@ -82,7 +80,7 @@ public class IngredientEntryActivity extends AppCompatActivity implements View.O
 
     public void addIngredientToGrid(CharSequence ingredient) {
         // Make sure "ingredient" has not already been entered
-        if(!ingredientsList.contains(ingredient) && ingredient.length() != 0) {
+        if(!ingredientsList.contains(ingredient) && !ingredient.equals("")) {
             // Add "ingredient" to the list
             ingredientsList.add(ingredient);
 
