@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Spinner;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,19 +24,18 @@ import java.util.ArrayList;
 public class IngredientEntryActivity extends AppCompatActivity
         implements View.OnClickListener, AdapterView.OnItemSelectedListener, MultiSpinner.MultiSpinnerListener {
 
-    private MultiSpinner cuisines;
-    private MultiSpinner diets;
-    private MultiSpinner allergies;
-    private ArrayList<CharSequence> cuisineList;
-    private ArrayList<CharSequence> dietList;
+    private MultiSpinner cuisineSpinner;
+    private MultiSpinner dietSpinner;
+    private MultiSpinner allergySpinner;
+    private ArrayList<CharSequence> selectedCuisines;
+    private ArrayList<CharSequence> selectedDiets;
     private ArrayList<CharSequence> allergiesList;
 
-    private Spinner cuisineSpinner;
     private EditText ingredientEntryBox;
-    private GridView selectedIngredientsView;
+    private GridView ingredientsGrid;
     private Button searchButton;
     private Button addButton;
-    private ArrayList<CharSequence> ingredientsList;
+    private ArrayList<CharSequence> selectedIngredients;
     private GoogleApiClient mGoogleApiClient;
 
     // Handles removing ingredients from the grid when user clicks on them
@@ -46,7 +43,7 @@ public class IngredientEntryActivity extends AppCompatActivity
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            removeIngredient(ingredientsList.get(position));
+            removeIngredient(selectedIngredients.get(position));
         }
 
     }
@@ -57,33 +54,33 @@ public class IngredientEntryActivity extends AppCompatActivity
         setContentView(R.layout.activity_ingredient_entry);
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
-        cuisines = (MultiSpinner) findViewById(R.id.cuisineSpinner);
-        diets = (MultiSpinner) findViewById(R.id.dietSpinner);
+        cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
+        dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
 
-//        cuisineSpinner = (Spinner)findViewById(R.id.cuisineSpinner);
         ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
-        selectedIngredientsView = (GridView)findViewById(R.id.selectedIngredientsGrid);
+        ingredientsGrid = (GridView)findViewById(R.id.selectedIngredientsGrid);
         searchButton = (Button)findViewById(R.id.searchButton);
         addButton = (Button)findViewById(R.id.addButton);
-        ingredientsList = new ArrayList<CharSequence>();
-        cuisineList = new ArrayList<CharSequence>();
-        dietList = new ArrayList<CharSequence>();
+        selectedIngredients = new ArrayList<CharSequence>();
+        selectedCuisines = new ArrayList<CharSequence>();
+        selectedDiets = new ArrayList<CharSequence>();
         allergiesList = new ArrayList<CharSequence>();
 
         // Configure listeners
         try {
             searchButton.setOnClickListener(this);
             addButton.setOnClickListener(this);
-            selectedIngredientsView.setOnItemClickListener(new IngredientClickListener());
+            ingredientsGrid.setOnItemClickListener(new IngredientClickListener());
             cuisineSpinner.setOnItemSelectedListener(this);
+            dietSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
         } catch(Exception e) {
             System.err.println(e.toString());
         }
 
         // Configure the cuisine spinner
-        cuisines.setItems(getResources().getStringArray(R.array.cuisine_array), this);
-        diets.setItems(getResources().getStringArray(R.array.diet_array), this);
+        cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
+        dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
 
 //        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
 //        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -105,10 +102,10 @@ public class IngredientEntryActivity extends AppCompatActivity
 
             switch (v.getId()) {
                 case R.id.cuisineSpinner:
-                    if (selected[k]) { cuisineList.add(cuisines.getItems()[k]); }
+                    if (selected[k]) { selectedCuisines.add(cuisineSpinner.getItems()[k]); }
                     break;
                 case R.id.dietSpinner:
-                    if(selected[k]) { dietList.add(diets.getItems()[k]); }
+                    if(selected[k]) { selectedDiets.add(dietSpinner.getItems()[k]); }
                     break;
             }
         }
@@ -154,22 +151,22 @@ public class IngredientEntryActivity extends AppCompatActivity
 
     public void addIngredientToGrid(CharSequence ingredient) {
         // Make sure "ingredient" has not already been entered
-        if(!ingredientsList.contains(ingredient) && !ingredient.equals("")) {
+        if(!selectedIngredients.contains(ingredient) && !ingredient.equals("")) {
             // Add "ingredient" to the list
-            ingredientsList.add(ingredient);
+            selectedIngredients.add(ingredient);
             updateGrid();
         }
     }
 
     public void removeIngredient(CharSequence ingredient) {
-        ingredientsList.remove(ingredient);
+        selectedIngredients.remove(ingredient);
         updateGrid();
     }
 
     private void updateGrid() {
-        // Create a new adapater with the updated "ingredientsList"
-        TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, ingredientsList);
-        selectedIngredientsView.setAdapter(ingredientsAdapter);
+        // Create a new adapater with the updated "selectedIngredients"
+        TextViewAdapter ingredientsAdapter = new TextViewAdapter(this, selectedIngredients);
+        ingredientsGrid.setAdapter(ingredientsAdapter);
         ingredientsAdapter.notifyDataSetChanged();
 
         // Clear the ingredient entry field

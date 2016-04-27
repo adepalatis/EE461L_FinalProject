@@ -23,72 +23,6 @@
             android:layout_marginTop="32dp"
             android:hint="Ingredient" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Food Allergies/Dietary Restrictions:"
-            android:id="@+id/textView"
-            android:layout_below="@+id/cuisineSpinner"
-            android:layout_centerHorizontal="true" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Peanuts"
-            android:id="@+id/checkBox"
-            android:layout_alignTop="@+id/textView"
-            android:layout_alignStart="@+id/textView"
-            android:layout_marginTop="28dp" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shellfish"
-            android:id="@+id/checkBox3"
-            android:layout_below="@+id/checkBox"
-            android:layout_alignStart="@+id/checkBox" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Milk"
-            android:id="@+id/checkBox4"
-            android:layout_below="@+id/checkBox3"
-            android:layout_alignStart="@+id/checkBox3" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gluten"
-            android:id="@+id/checkBox5"
-            android:layout_below="@+id/checkBox4"
-            android:layout_alignStart="@+id/checkBox4" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wheat"
-            android:id="@+id/checkBox6"
-            android:layout_alignTop="@+id/checkBox"
-            android:layout_alignEnd="@+id/textView" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Soy"
-            android:id="@+id/checkBox7"
-            android:layout_below="@+id/checkBox6"
-            android:layout_alignStart="@+id/checkBox6" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other"
-            android:id="@+id/checkBox8"
-            android:layout_alignBottom="@+id/checkBox5"
-            android:layout_alignStart="@+id/checkBox7" />
-
         <com.github.adepalatis.ee461.recipez.MultiSpinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,20 +33,12 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/searchButton" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Eggs"
-            android:id="@+id/checkBox2"
-            android:layout_below="@+id/checkBox7"
-            android:layout_alignStart="@+id/checkBox7" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find Recipes"
             android:id="@+id/searchButton"
-            android:layout_below="@+id/checkBox8"
+            android:layout_above="@+id/savedRecipesButton"
             android:layout_centerHorizontal="true" />
 
         <GridView
@@ -121,6 +47,7 @@
             android:id="@+id/selectedIngredientsGrid"
             android:numColumns="4"
             android:horizontalSpacing="10dp"
+            android:verticalSpacing="6dp"
             android:scrollbars="vertical"
             android:scrollbarFadeDuration="0"
             android:layout_below="@+id/ingredientEntryBox"
@@ -131,8 +58,8 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:id="@+id/addButton"
-            android:layout_alignBottom="@+id/ingredientEntryBox"
-            android:layout_alignStart="@+id/checkBox6" />
+            android:layout_alignTop="@+id/ingredientEntryBox"
+            android:layout_alignEnd="@+id/selectedIngredientsGrid" />
 
         <Button
             android:layout_width="wrap_content"
@@ -147,16 +74,17 @@
             android:layout_height="wrap_content"
             android:text="View Saved recipes"
             android:id="@+id/savedRecipesButton"
-            android:layout_below="@+id/searchButton"
+            android:layout_above="@+id/signOutButton"
             android:layout_centerHorizontal="true" />
 
         <com.github.adepalatis.ee461.recipez.MultiSpinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dietSpinner"
-            android:layout_above="@+id/checkBox"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/ingredientEntryBox" />
+            android:layout_below="@+id/cuisineSpinner"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="43dp"
+            android:layout_alignEnd="@+id/cuisineSpinner" />
 
     </RelativeLayout>
 
