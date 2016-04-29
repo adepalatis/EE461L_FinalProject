@@ -26,7 +26,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
         recipeList = (ListView) findViewById(R.id.showRecipes);
         Log.d("thing", getIntent().toString());
         Bundle data = getIntent().getExtras();
-//        if (data != null) {
+        if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");
             List<RecipeSearchResult> rsr;
 
@@ -51,7 +51,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                     Log.d("sit", e.toString());
                 }
             }
-//        }
+        }
     }
 
     public void transitionToNext(RecipeSearchResult r) {
