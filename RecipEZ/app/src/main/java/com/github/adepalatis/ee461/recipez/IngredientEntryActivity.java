@@ -4,12 +4,18 @@ package com.github.adepalatis.ee461.recipez;
  * Created by Tony on 3/27/2016.
  */
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -51,7 +57,9 @@ public class IngredientEntryActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_ingredient_entry);
+
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
@@ -82,12 +90,26 @@ public class IngredientEntryActivity extends AppCompatActivity
         cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
         dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
 
-//        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this, R.array.cuisine_array, android.R.layout.simple_spinner_dropdown_item);
-//        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        cuisineSpinner.setAdapter(cuisineAdapter);
-
         // Configure the google API client
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
+
+//        ActionBar actionBar = getActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayShowCustomEnabled(true);
+//
+//        LayoutInflater inflator = (LayoutInflater) this
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View v = inflator.inflate(R.layout.actionbar, null);
+//        actionBar.setCustomView(v);
+//        ArrayList<String> COUNTRIES = new ArrayList<String>();
+//        COUNTRIES.add("USA");
+//        COUNTRIES.add("England");
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+//        AutoCompleteTextView textView = (AutoCompleteTextView) v
+//                .findViewById(R.id.ingredientEntryBox);
+//        textView.setAdapter(adapter);
     }
 
     @Override
@@ -128,7 +150,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 RSP.setCuisine(selectedCuisines);
                 RSP.setDiet(selectedDiets);
                 RSP.setIntolerance(selectedAllergies);
-                Intent nextActivity = new Intent(this, GoogleLoginActivity.class);
+                Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);
 
                 startActivity(nextActivity);
