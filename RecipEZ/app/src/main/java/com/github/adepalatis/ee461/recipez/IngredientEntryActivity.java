@@ -128,10 +128,6 @@ public class IngredientEntryActivity extends AppCompatActivity
                 addIngredientToGrid(ingredientEntryBox.getText().toString());
                 break;
 
-            // TODO: Implement this
-            case R.id.savedRecipesButton:
-                break;
-
             case R.id.signOutButton:
                 signOut();
                 startActivity(new Intent(this, GoogleLoginActivity.class));
