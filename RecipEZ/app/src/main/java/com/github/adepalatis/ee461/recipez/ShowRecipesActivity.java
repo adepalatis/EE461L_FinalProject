@@ -28,7 +28,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
 //        if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");
-            List<RecipeSearchResult> rsr;
+            List<RecipeSearchResult> rsr = null;
 
             FoodAPI api = FoodAPI.getInstance();
             if (!rsp.getQuery().equals("")) { // Use query recipe search

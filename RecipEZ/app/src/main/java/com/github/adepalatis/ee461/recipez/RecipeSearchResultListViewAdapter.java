@@ -2,7 +2,6 @@ package com.github.adepalatis.ee461.recipez;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -57,15 +54,8 @@ public class RecipeSearchResultListViewAdapter extends BaseAdapter {
         e.img = (ImageView) row.findViewById(R.id.recipeImage);
         e.title = (TextView) row.findViewById(R.id.recipeTitle);
 
-        try {
-            InputStream is = (InputStream) new URL("https://spoonacular.com/recipeImages/" + getItem(index).image).getContent();
-            Drawable d = Drawable.createFromStream(is, getItem(index).title);
-
-            e.img.setImageDrawable(d);
-            e.title.setText(getItem(index).title);
-        } catch (Exception e1) {
-
-        }
+        e.img.setImageURI(Uri.parse("https://spoonacular.com/recipeImages/" + getItem(index).image));
+        e.title.setText(getItem(index).title);
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override

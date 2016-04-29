@@ -166,7 +166,6 @@ public class RecipeSearchParameters implements Parcelable {
         dest.writeList(cuisine);
         dest.writeList(diet);
         dest.writeList(intolerance);
-        dest.setDataPosition(0);
     }
 
     public static final Parcelable.Creator<RecipeSearchParameters> CREATOR = new Parcelable.Creator<RecipeSearchParameters>() {
