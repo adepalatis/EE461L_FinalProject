@@ -3,6 +3,7 @@ package com.github.adepalatis.ee461.recipez;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,13 +16,13 @@ public class RecipeSearchParameters implements Parcelable {
     private int maxNumber = 10; // Max number of results
     private int offset = 0; // Number of results to skip
     private int ranking = 1; // 1 = maximize used ingredients, 2 = minimize missing ingredients
-    private String query = null; // Recipe search query
-    private String type = null; // The type of the recipe, i.e main course
-    private List<Ingredient> ingredients = null;
-    private List<Ingredient> excludeIngredients = null;
-    private List<String> cuisine = null;
-    private List<String> diet = null;
-    private List<String> intolerance = null;
+    private String query = ""; // Recipe search query
+    private String type = ""; // The type of the recipe, i.e main course
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<Ingredient> excludeIngredients = new ArrayList<>();
+    private List<String> cuisine = new ArrayList<>();
+    private List<String> diet = new ArrayList<>();
+    private List<String> intolerance = new ArrayList<>();
 
     public boolean isIngredientLists() {
         return ingredientLists;
