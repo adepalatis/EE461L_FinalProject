@@ -80,22 +80,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
 
-    <!-- Content Description for images -->
-    <string name="desc_google_icon">Google Logo</string>
-
-    <!-- Rationale for asking for Contacts -->
-    <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
-
     <!-- Activity Names and Descriptions -->
-    <string name="name_sign_in_activity">SignInActivity</string>
-    <string name="desc_sign_in_activity">Signing in, signing out, and revoking access.</string>
-    <string name="desc_sign_in_activity_scopes">Signing in, signing out, and revoking access with Google Drive permissions.</string>
-    <string name="name_id_token_activity">IdTokenActivity</string>
-    <string name="desc_id_token_activity">Retrieving an ID Token for the user.</string>
-    <string name="desc_auth_code_activity">Demonstrate retrieving an auth code for authorizing your server.</string>
-    <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
-
     <string name="server_client_id">185165070366-e38bbciadoo3rk8f5gofl1jc32m1efvv.apps.googleusercontent.com</string>
 
-    <string name="test_string">Hello, world!</string>
+    <string name="searchResultsTitle">Results</string>
 </resources>
