@@ -29,11 +29,12 @@ public class ShowRecipesActivity extends AppCompatActivity {
             List<RecipeSearchResult> rsr = null;
 
             FoodAPI api = FoodAPI.getInstance();
-            if (rsp.getQuery() != null) { // Use query recipe search
+            if (rsp.getQuery().equals("")) { // Use query recipe search
                 try {
                     rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
                             rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
                             rsp.getMaxNumber(), rsp.getOffset(), rsp.getQuery(), rsp.getType());
+                    recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                 } catch(Exception e) {
                     System.err.println(e);
                 }
@@ -41,14 +42,11 @@ public class ShowRecipesActivity extends AppCompatActivity {
                 try {
                     rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
                             rsp.isLimitLicense(), rsp.getMaxNumber(), rsp.getRanking());
+                    recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                 } catch(Exception e) {
                     System.err.println(e);
                 }
             }
-
-            recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
-
-            // TODO: Set onClick of each ImageView to transition with Intent to new activity
         }
     }
 
