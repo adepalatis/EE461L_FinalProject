@@ -1,9 +1,12 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ExpandableListView;
 import android.widget.GridLayout;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -12,7 +15,7 @@ import java.util.List;
  */
 public class ShowRecipesActivity extends AppCompatActivity {
 
-    GridLayout recipes = (GridLayout) findViewById(R.id.show_recipes);
+    ListView recipeList = (ListView) findViewById(R.id.showRecipes);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");
-            List<RecipeSearchResult> rsr;
+            List<RecipeSearchResult> rsr = null;
 
             FoodAPI api = FoodAPI.getInstance();
             if (rsp.getQuery() != null) { // Use query recipe search
@@ -42,10 +45,16 @@ public class ShowRecipesActivity extends AppCompatActivity {
                 }
             }
 
-            // TODO: Create rsr.size() number of ImageViews as children of GridLayout recipes;
-            // TODO: Set image of each ImageView with rsr.get(#).image
+            recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
+
             // TODO: Set onClick of each ImageView to transition with Intent to new activity
         }
+    }
+
+    public void transitionToNext(RecipeSearchResult r) {
+        Intent i = new Intent(this, ShowSingleRecipeActivity.class);
+        i.putExtra("recipeId", r.id);
+        startActivity(i);
     }
 
 }

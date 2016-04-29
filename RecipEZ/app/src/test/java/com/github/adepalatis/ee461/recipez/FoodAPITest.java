@@ -1,6 +1,7 @@
 package com.github.adepalatis.ee461.recipez;
 
 import org.junit.Test;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,16 @@ import java.util.List;
 public class FoodAPITest {
 
     @Test
-    public void searchIngredient() throws Exception {
+    public void testSearchIngredient() throws Exception {
         FoodAPI api = FoodAPI.getInstance();
         List<Ingredient> res = api.searchIngredient("onion");
-        System.out.println(res);
+        for (Ingredient i: res) {
+            Assert.assertTrue(i.getName() != null && !i.getName().equals(""));
+        }
     }
 
     @Test
-    public void searchRecipeWithIngredients() throws Exception {
+    public void testSearchRecipeWithIngredientsMax2() throws Exception {
         FoodAPI api = FoodAPI.getInstance();
 
         List<Ingredient> i = new ArrayList<Ingredient>() {{
@@ -27,14 +30,20 @@ public class FoodAPITest {
         }};
 
         List<RecipeSearchResult> res = api.searchRecipes(true, i, false, 2, 1);
-        System.out.println(res);
+        Assert.assertTrue(res.size() <= 2);
+        for (RecipeSearchResult r: res) {
+            Assert.assertTrue(r.id != null && r.id >= 0);
+        }
     }
 
     @Test
-    public void searchRecipeWithQuery() throws Exception {
+    public void testSearchRecipeWithQueryMax2() throws Exception {
         FoodAPI api = FoodAPI.getInstance();
         List<RecipeSearchResult> res = api.searchRecipes(null, null, null, null, null, 2, null, "taco", null);
-        System.out.println(res);
+        Assert.assertTrue(res.size() <= 2);
+        for (RecipeSearchResult r: res) {
+            Assert.assertTrue(r.id != null && r.id >= 0);
+        }
     }
 
     @Test
@@ -42,6 +51,6 @@ public class FoodAPITest {
         FoodAPI api = FoodAPI.getInstance();
         List<RecipeSearchResult> res = api.searchRecipes(null, null, null, null, null, 2, null, "pasta", null);
         Recipe r = api.getRecipe(res.get(0).id, true);
-        System.out.println(r);
+        Assert.assertTrue(r != null && r.id >= 0 && r.id.equals(res.get(0).id));
     }
 }
