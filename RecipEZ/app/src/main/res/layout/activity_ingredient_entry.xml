@@ -24,14 +24,15 @@
             android:hint="Ingredient" />
 
         <com.github.adepalatis.ee461.recipez.MultiSpinner
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/cuisineSpinner"
             android:spinnerMode="dropdown"
             android:clickable="false"
-            android:layout_below="@+id/selectedIngredientsGrid"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/searchButton" />
+            android:theme="@style/Widget.AppCompat.Spinner.DropDown"
+            android:layout_above="@+id/dietSpinner"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="23dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -40,6 +41,7 @@
             android:id="@+id/searchButton"
             android:layout_above="@+id/signOutButton"
             android:layout_centerHorizontal="true" />
+
         <GridView
             android:layout_width="300dp"
             android:layout_height="100dp"
@@ -69,13 +71,29 @@
             android:layout_alignParentStart="true" />
 
         <com.github.adepalatis.ee461.recipez.MultiSpinner
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/dietSpinner"
-            android:layout_below="@+id/cuisineSpinner"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="43dp"
-            android:layout_alignEnd="@+id/cuisineSpinner" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Cusinie (Optional):"
+            android:id="@+id/textView"
+            android:layout_alignBottom="@+id/cuisineSpinner"
+            android:layout_toStartOf="@+id/searchButton" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Dietary Restrictions:"
+            android:id="@+id/textView2"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/textView" />
 
     </RelativeLayout>
 

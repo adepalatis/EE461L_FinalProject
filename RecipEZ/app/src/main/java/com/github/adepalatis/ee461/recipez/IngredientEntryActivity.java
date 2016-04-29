@@ -27,9 +27,9 @@ public class IngredientEntryActivity extends AppCompatActivity
     private MultiSpinner cuisineSpinner;
     private MultiSpinner dietSpinner;
     private MultiSpinner allergySpinner;
-    private ArrayList<CharSequence> selectedCuisines;
-    private ArrayList<CharSequence> selectedDiets;
-    private ArrayList<CharSequence> allergiesList;
+    private ArrayList<String> selectedCuisines;
+    private ArrayList<String> selectedDiets;
+    private ArrayList<String> selectedAllergies;
 
     private EditText ingredientEntryBox;
     private GridView ingredientsGrid;
@@ -62,9 +62,9 @@ public class IngredientEntryActivity extends AppCompatActivity
         searchButton = (Button)findViewById(R.id.searchButton);
         addButton = (Button)findViewById(R.id.addButton);
         selectedIngredients = new ArrayList<CharSequence>();
-        selectedCuisines = new ArrayList<CharSequence>();
-        selectedDiets = new ArrayList<CharSequence>();
-        allergiesList = new ArrayList<CharSequence>();
+        selectedCuisines = new ArrayList<String>();
+        selectedDiets = new ArrayList<String>();
+        selectedAllergies = new ArrayList<String>();
 
         // Configure listeners
         try {
@@ -120,8 +120,18 @@ public class IngredientEntryActivity extends AppCompatActivity
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.searchButton:
-                startActivity(new Intent(this, ShowRecipesActivity.class));
-                v.setBackgroundColor(Color.RED);
+                ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+                for(CharSequence i : selectedIngredients) {
+                    ingredients.add(new Ingredient((String)i));
+                }
+                RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
+                RSP.setCuisine(selectedCuisines);
+                RSP.setDiet(selectedDiets);
+                RSP.setIntolerance(selectedAllergies);
+                Intent nextActivity = new Intent(this, GoogleLoginActivity.class);
+                nextActivity.putExtra("RSP", RSP);
+
+                startActivity(nextActivity);
                 break;
 
             case R.id.addButton:
