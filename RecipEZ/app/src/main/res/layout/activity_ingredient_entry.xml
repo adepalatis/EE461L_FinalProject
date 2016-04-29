@@ -38,9 +38,8 @@
             android:layout_height="wrap_content"
             android:text="Find Recipes"
             android:id="@+id/searchButton"
-            android:layout_above="@+id/savedRecipesButton"
+            android:layout_above="@+id/signOutButton"
             android:layout_centerHorizontal="true" />
-
         <GridView
             android:layout_width="300dp"
             android:layout_height="100dp"
@@ -68,14 +67,6 @@
             android:id="@+id/signOutButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Saved recipes"
-            android:id="@+id/savedRecipesButton"
-            android:layout_above="@+id/signOutButton"
-            android:layout_centerHorizontal="true" />
 
         <com.github.adepalatis.ee461.recipez.MultiSpinner
             android:layout_width="wrap_content"
