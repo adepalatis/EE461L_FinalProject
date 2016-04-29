@@ -58,7 +58,8 @@ public class RecipeSearchResultListViewAdapter extends BaseAdapter {
         e.title = (TextView) row.findViewById(R.id.recipeTitle);
 
         try {
-            InputStream is = (InputStream) new URL("https://spoonacular.com/recipeImages/" + getItem(index).image).getContent();
+            String url = getItem(index).image.contains("https") ? getItem(index).image : "https://spoonacular.com/recipeImages/" + getItem(index).image;
+            InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, getItem(index).title);
 
             e.img.setImageDrawable(d);
