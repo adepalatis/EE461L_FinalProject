@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -143,8 +144,16 @@ public class IngredientEntryActivity extends AppCompatActivity
         switch(v.getId()) {
             case R.id.searchButton:
                 ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+                Log.d("Hello", "Its me");
+                if(selectedIngredients.isEmpty()) { Log.d("fuck", "this"); }
                 for(CharSequence i : selectedIngredients) {
-                    ingredients.add(new Ingredient((String)i));
+                    Ingredient myIngredient = new Ingredient((String)i);
+                    myIngredient.setAisle("Hello");
+                    myIngredient.setAmount(0.0);
+                    myIngredient.setImage("Hello");
+                    myIngredient.setOriginalString("Hello");
+                    myIngredient.setUnit("Hello");
+                    ingredients.add(myIngredient);
                 }
                 RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
                 RSP.setCuisine(selectedCuisines);

@@ -15,13 +15,14 @@ import java.util.List;
  */
 public class ShowRecipesActivity extends AppCompatActivity {
 
-    ListView recipeList = (ListView) findViewById(R.id.showRecipes);
+    ListView recipeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_recipes);
 
+        recipeList = (ListView) findViewById(R.id.showRecipes);
         Bundle data = getIntent().getExtras();
         if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");

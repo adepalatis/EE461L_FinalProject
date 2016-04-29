@@ -134,7 +134,7 @@ public class RecipeSearchParameters implements Parcelable {
         ranking = p.readInt();
         query = p.readString();
         type = p.readString();
-        p.readList(ingredients, List.class.getClassLoader());
+        p.readList(ingredients, Ingredient.class.getClassLoader());
         p.readList(excludeIngredients, List.class.getClassLoader());
         p.readList(cuisine, List.class.getClassLoader());
         p.readList(diet, List.class.getClassLoader());
