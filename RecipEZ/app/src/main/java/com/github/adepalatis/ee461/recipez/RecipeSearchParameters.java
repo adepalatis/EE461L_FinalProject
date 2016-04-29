@@ -3,6 +3,7 @@ package com.github.adepalatis.ee461.recipez;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -134,8 +135,10 @@ public class RecipeSearchParameters implements Parcelable {
         ranking = p.readInt();
         query = p.readString();
         type = p.readString();
-        p.readList(ingredients, Ingredient.class.getClassLoader());
-        p.readList(excludeIngredients, List.class.getClassLoader());
+
+        ingredients = Arrays.asList(p.createTypedArray(Ingredient.CREATOR));
+        excludeIngredients = Arrays.asList(p.createTypedArray(Ingredient.CREATOR));
+
         p.readList(cuisine, List.class.getClassLoader());
         p.readList(diet, List.class.getClassLoader());
         p.readList(intolerance, List.class.getClassLoader());
@@ -155,8 +158,10 @@ public class RecipeSearchParameters implements Parcelable {
         dest.writeInt(ranking);
         dest.writeString(query);
         dest.writeString(type);
-        dest.writeList(ingredients);
-        dest.writeList(excludeIngredients);
+
+        dest.writeTypedList(ingredients);
+        dest.writeTypedList(excludeIngredients);
+
         dest.writeList(cuisine);
         dest.writeList(diet);
         dest.writeList(intolerance);
