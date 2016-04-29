@@ -144,8 +144,6 @@ public class IngredientEntryActivity extends AppCompatActivity
         switch(v.getId()) {
             case R.id.searchButton:
                 ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-                Log.d("Hello", "Its me");
-                if(selectedIngredients.isEmpty()) { Log.d("fuck", "this"); }
                 for(CharSequence i : selectedIngredients) {
                     Ingredient myIngredient = new Ingredient((String)i);
                     myIngredient.setAisle("Hello");
@@ -163,6 +161,8 @@ public class IngredientEntryActivity extends AppCompatActivity
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);
 
+//                if(nextActivity.getExtras() == null) { Log.d("wtf", "wtf"); }
+                Log.d("thing2", nextActivity.toString());
                 startActivity(nextActivity);
                 break;
 

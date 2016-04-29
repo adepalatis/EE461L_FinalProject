@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.GridLayout;
 import android.widget.ListView;
@@ -23,31 +24,34 @@ public class ShowRecipesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_recipes);
 
         recipeList = (ListView) findViewById(R.id.showRecipes);
+        Log.d("thing", getIntent().toString());
         Bundle data = getIntent().getExtras();
-        if (data != null) {
+//        if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");
             List<RecipeSearchResult> rsr = null;
 
             FoodAPI api = FoodAPI.getInstance();
-            if (rsp.getQuery().equals("")) { // Use query recipe search
+            if (!rsp.getQuery().equals("")) { // Use query recipe search
                 try {
                     rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
                             rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
                             rsp.getMaxNumber(), rsp.getOffset(), rsp.getQuery(), rsp.getType());
                     recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
+                    Log.d("goodbye", "" + rsr.size());
                 } catch(Exception e) {
-                    System.err.println(e);
+                    Log.d("shit", e.toString());
                 }
             } else {
                 try {
                     rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
                             rsp.isLimitLicense(), rsp.getMaxNumber(), rsp.getRanking());
                     recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
+                    Log.d("Hello", "" + rsr.size());
                 } catch(Exception e) {
-                    System.err.println(e);
+                    Log.d("sit", e.toString());
                 }
             }
-        }
+//        }
     }
 
     public void transitionToNext(RecipeSearchResult r) {

@@ -2,6 +2,8 @@ package com.github.adepalatis.ee461.recipez;
 /**
  * Created by michael on 4/20/16.
  */
+import android.os.StrictMode;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +20,10 @@ public class FoodAPI {
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 
-    private FoodAPI(){}
+    private FoodAPI(){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+    }
 
     public static FoodAPI getInstance() {
         return api;
