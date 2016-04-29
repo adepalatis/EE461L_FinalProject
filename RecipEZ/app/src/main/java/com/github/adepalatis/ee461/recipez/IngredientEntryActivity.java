@@ -158,6 +158,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
                 RSP.setCuisine(selectedCuisines);
                 RSP.setDiet(selectedDiets);
+                RSP.setExcludeIngredients(new ArrayList<Ingredient>());
                 RSP.setIntolerance(selectedAllergies);
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);
