@@ -71,7 +71,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignEnd="@+id/dietSpinner"
             android:background="@color/blue_grey_900"
             android:layout_below="@+id/selectedIngredientsGrid"
             android:layout_above="@+id/searchButton">
@@ -111,6 +110,24 @@
                 android:id="@+id/dietSpinner"
                 android:layout_alignBottom="@+id/textView2"
                 android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Intolerances:"
+                android:id="@+id/textView3"
+                android:layout_marginTop="56dp"
+                android:textColor="#ffffff"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentStart="true" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/intoleranceSpinner"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignStart="@+id/dietSpinner" />
         </RelativeLayout>
 
 

@@ -33,10 +33,10 @@ public class IngredientEntryActivity extends AppCompatActivity
 
     private MultiSpinner cuisineSpinner;
     private MultiSpinner dietSpinner;
-    private MultiSpinner allergySpinner;
+    private MultiSpinner intoleranceSpinner;
     private ArrayList<String> selectedCuisines;
     private ArrayList<String> selectedDiets;
-    private ArrayList<String> selectedAllergies;
+    private ArrayList<String> selectedIntolerances;
 
     private EditText ingredientEntryBox;
     private GridView ingredientsGrid;
@@ -65,7 +65,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
-
+        intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
         ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
         ingredientsGrid = (GridView)findViewById(R.id.selectedIngredientsGrid);
         searchButton = (Button)findViewById(R.id.searchButton);
@@ -73,7 +73,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         selectedIngredients = new ArrayList<CharSequence>();
         selectedCuisines = new ArrayList<String>();
         selectedDiets = new ArrayList<String>();
-        selectedAllergies = new ArrayList<String>();
+        selectedIntolerances = new ArrayList<String>();
 
         // Configure listeners
         try {
@@ -82,6 +82,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             ingredientsGrid.setOnItemClickListener(new IngredientClickListener());
             cuisineSpinner.setOnItemSelectedListener(this);
             dietSpinner.setOnItemSelectedListener(this);
+            intoleranceSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
         } catch(Exception e) {
             System.err.println(e.toString());
@@ -90,7 +91,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         // Configure the cuisine spinner
         cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
         dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
-
+        intoleranceSpinner.setItems(getResources().getStringArray(R.array.allergy_array), this);
         // Configure the google API client
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
@@ -130,6 +131,9 @@ public class IngredientEntryActivity extends AppCompatActivity
                 case R.id.dietSpinner:
                     if(selected[k]) { selectedDiets.add(dietSpinner.getItems()[k]); }
                     break;
+                case R.id.intoleranceSpinner:
+                    if(selected[k]) { selectedIntolerances.add(intoleranceSpinner.getItems()[k]);}
+                    break;
             }
         }
     }
@@ -156,8 +160,8 @@ public class IngredientEntryActivity extends AppCompatActivity
                 RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
                 RSP.setCuisine(selectedCuisines);
                 RSP.setDiet(selectedDiets);
+                RSP.setIntolerance(selectedIntolerances);
                 RSP.setExcludeIngredients(new ArrayList<Ingredient>());
-                RSP.setIntolerance(selectedAllergies);
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);
 
