@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,16 +24,7 @@
             android:layout_marginTop="32dp"
             android:hint="Ingredient" />
 
-        <com.github.adepalatis.ee461.recipez.MultiSpinner
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/cuisineSpinner"
-            android:spinnerMode="dropdown"
-            android:clickable="false"
-            android:theme="@style/Widget.AppCompat.Spinner.DropDown"
-            android:layout_above="@+id/dietSpinner"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="23dp" />
+
 
         <Button
             android:layout_width="wrap_content"
@@ -68,32 +60,59 @@
             android:text="Sign Out"
             android:id="@+id/signOutButton"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:visibility="invisible" />
 
-        <com.github.adepalatis.ee461.recipez.MultiSpinner
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/dietSpinner"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Cusinie (Optional):"
-            android:id="@+id/textView"
-            android:layout_alignBottom="@+id/cuisineSpinner"
-            android:layout_toStartOf="@+id/searchButton" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Dietary Restrictions:"
-            android:id="@+id/textView2"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/textView" />
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/dietSpinner"
+            android:background="@color/blue_grey_900"
+            android:layout_below="@+id/selectedIngredientsGrid"
+            android:layout_above="@+id/searchButton">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Cusinie (Optional):"
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="43dp"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Dietary Restrictions:"
+                android:id="@+id/textView2"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="50dp"
+                android:textColor="#ffffff" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/cuisineSpinner"
+                android:layout_alignBottom="@+id/textView"
+                android:layout_alignParentEnd="true" />
+
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/dietSpinner"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

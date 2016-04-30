@@ -39,9 +39,9 @@ public class MultiSpinner extends Spinner implements
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (isChecked)
-            selected[which] = false;
-        else
             selected[which] = true;
+        else
+            selected[which] = false;
     }
 
     @Override
@@ -49,19 +49,36 @@ public class MultiSpinner extends Spinner implements
         // refresh text on spinner
         StringBuffer spinnerBuffer = new StringBuffer();
         boolean someUnselected = false;
-        for (int i = 0; i < items.length; i++) {
+        boolean oneOtherThanAnySelected = false;
+        boolean noneSelected = true;
+        for (int i = items.length - 1; i >= 0; i--) { //traverse backwards
             if (selected[i] == true) {
+                if(i!=0) {
+                    oneOtherThanAnySelected = true;
+                    noneSelected = false;
+                }
+                else if(oneOtherThanAnySelected == true && i == 0) {
+                    selected[i] = false;
+                    continue; //dont append any
+                }
                 spinnerBuffer.append(items[i]);
                 spinnerBuffer.append(", ");
             } else {
                 someUnselected = true;
             }
         }
+        if(noneSelected == true) {
+            if(selected[0] != true) { //if user had something selected before but not anymore. this avoids printing "Any" twice
+                selected[0] = true;
+                spinnerBuffer.append(items[0]);
+                spinnerBuffer.append(", ");
+            }
+        }
         String spinnerText;
         if (someUnselected) {
             spinnerText = spinnerBuffer.toString();
             if (spinnerText.length() > 2)
-                spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+                spinnerText = spinnerText.substring(0, spinnerText.length() - 2); //remove space and comma at end
         } else {
             spinnerText = "Hello";
         }

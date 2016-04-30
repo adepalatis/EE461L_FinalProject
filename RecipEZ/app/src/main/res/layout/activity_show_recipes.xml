@@ -4,16 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:background="#27ae60">
+    android:background="@color/blue_grey_700">
 
     <TextView
         android:id="@+id/recipeListTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:text="@string/searchResultsTitle" />
+        android:textSize="0sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
     
     <ListView
         android:id="@+id/showRecipes"
