@@ -91,16 +91,16 @@ public class MultiSpinner extends Spinner implements
 
     @Override
     public boolean performClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMultiChoiceItems(items, selected, this);
-        builder.setPositiveButton(android.R.string.ok,
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_HOLO_LIGHT);
+        builder.setTitle("Select Items");
+        builder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
+        builder.setMultiChoiceItems(items, selected, this);
         builder.setOnCancelListener(this);
         builder.show();
         return true;
