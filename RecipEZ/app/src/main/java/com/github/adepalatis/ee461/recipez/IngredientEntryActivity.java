@@ -92,9 +92,6 @@ public class IngredientEntryActivity extends AppCompatActivity
 
         ingredientEntryBox = (AutoCompleteTextView) findViewById(R.id.ingredientEntryBox);
         final List<String> toDisplay = new ArrayList<String>();
-        toDisplay.add("hii");
-        toDisplay.add("byee");
-        toDisplay.add("arrayLit");
         final ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,toDisplay);
         ingredientEntryBox.setAdapter(autoCompleteAdapter);
         ingredientEntryBox.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -123,7 +120,12 @@ public class IngredientEntryActivity extends AppCompatActivity
                 }
                 try {
                     toConvert = FoodAPI.getInstance().searchIngredient(text);
-                    toConvert = toConvert.subList(0,5);
+                    if(toConvert.size() < 10) {
+                        toConvert = toConvert.subList(0,toConvert.size());
+                    }
+                    else {
+                        toConvert = toConvert.subList(0,10);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
