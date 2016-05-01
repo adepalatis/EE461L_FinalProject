@@ -224,6 +224,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             selectedIngredients.add(ingredient);
             updateGrid();
         }
+        ingredientEntryBox.setText("");
     }
 
     public void removeIngredient(CharSequence ingredient) {
