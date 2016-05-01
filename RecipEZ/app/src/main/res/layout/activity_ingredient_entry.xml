@@ -36,6 +36,7 @@
             android:inputType="text"
             android:layout_alignEnd="@+id/selectedIngredientsGrid"
             android:backgroundTint="@color/nephritis"
+            android:textCursorDrawable="@null"
             />
 
 
