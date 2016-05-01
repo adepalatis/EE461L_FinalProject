@@ -35,8 +35,6 @@ public class GoogleLoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
         // Button listeners
         try {
             findViewById(R.id.sign_in_button).setOnClickListener(this);

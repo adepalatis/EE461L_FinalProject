@@ -12,16 +12,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -67,7 +70,6 @@ public class IngredientEntryActivity extends AppCompatActivity
         setContentView(R.layout.activity_ingredient_entry);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
@@ -75,8 +77,6 @@ public class IngredientEntryActivity extends AppCompatActivity
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
         intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
         typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
-
-        ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
         ingredientsGrid = (GridView)findViewById(R.id.selectedIngredientsGrid);
         searchButton = (Button)findViewById(R.id.searchButton);
         addButton = (Button)findViewById(R.id.addButton);
@@ -85,7 +85,17 @@ public class IngredientEntryActivity extends AppCompatActivity
         selectedDiets = new ArrayList<String>();
         selectedType = new ArrayList<String>();
         selectedIntolerances = new ArrayList<String>();
-
+        ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
+        ingredientEntryBox.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    addButton.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         // Configure listeners
         try {
             searchButton.setOnClickListener(this);
@@ -150,17 +160,6 @@ public class IngredientEntryActivity extends AppCompatActivity
                 case R.id.typeSpinner:
                     if(selected[k]) {selectedType.add(typeSpinner.getItems()[k]);}
             }
-        }
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem)
-    {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(menuItem);
         }
     }
 

@@ -20,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/blue_grey_700">
+        android:background="#ffffff">
 
         <EditText
             android:layout_width="200dp"
@@ -30,7 +30,13 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="36dp"
             android:layout_marginTop="32dp"
-            android:hint="Ingredient" />
+            android:hint="Ingredient"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:layout_alignEnd="@+id/selectedIngredientsGrid"
+            android:backgroundTint="@color/nephritis"
+            />
 
 
 
@@ -39,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="Find Recipes"
             android:id="@+id/searchButton"
-            android:layout_alignTop="@+id/signOutButton"
+            android:layout_below="@+id/selectedIngredientsGrid"
             android:layout_centerHorizontal="true" />
 
         <GridView
@@ -60,7 +66,8 @@
             android:text="Add"
             android:id="@+id/addButton"
             android:layout_alignTop="@+id/ingredientEntryBox"
-            android:layout_alignEnd="@+id/selectedIngredientsGrid" />
+            android:layout_alignEnd="@+id/selectedIngredientsGrid"
+            android:visibility="gone" />
 
         <Button
             android:layout_width="wrap_content"
@@ -79,9 +86,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue_grey_900"
-            android:layout_below="@+id/selectedIngredientsGrid"
-            android:layout_above="@+id/searchButton">
+            android:background="#27ae60"
+            android:layout_below="@+id/searchButton">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,7 +97,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="43dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,8 +108,9 @@
                 android:id="@+id/textView2"
                 android:layout_below="@+id/textView"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="50dp"
-                android:textColor="#ffffff" />
+                android:layout_marginTop="40dp"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp" />
 
             <com.github.adepalatis.ee461.recipez.MultiSpinner
                 android:layout_width="200dp"
@@ -125,10 +133,11 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Intolerances:"
                 android:id="@+id/textView3"
-                android:layout_marginTop="49dp"
+                android:layout_marginTop="40dp"
                 android:textColor="#ffffff"
                 android:layout_below="@+id/textView2"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp" />
 
             <com.github.adepalatis.ee461.recipez.MultiSpinner
                 android:layout_width="200dp"
@@ -143,9 +152,11 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Dish type:"
                 android:id="@+id/textView4"
+                android:layout_marginTop="40dp"
                 android:textColor="#ffffff"
-                android:layout_alignTop="@+id/typeSpinner"
-                android:layout_alignParentStart="true" />
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp" />
 
             <com.github.adepalatis.ee461.recipez.MultiSpinner
                 android:layout_width="200dp"

@@ -21,6 +21,7 @@
         android:textSize="25sp"
         android:gravity="center"
         android:text="TextView"
-        android:background="#ecf0f1" />
+        android:background="@color/nephritis"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
