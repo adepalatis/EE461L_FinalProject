@@ -103,4 +103,6 @@
     <string name="servings">Servings</string>
 
     <string name="placeholder">Text</string>
+
+    <string name="minutes">minutes</string>
 </resources>

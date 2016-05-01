@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_grey_700">
+    android:background="@color/blue_grey_700"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/recipeImage"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
-
-    <TextView
-        android:id="@+id/recipeTitle"
         android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:text="TextView"
-        android:background="@color/nephritis"
-        android:textColor="#ffffff" />
+        android:layout_gravity="bottom">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/recipeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/nephritis_70"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+</FrameLayout>

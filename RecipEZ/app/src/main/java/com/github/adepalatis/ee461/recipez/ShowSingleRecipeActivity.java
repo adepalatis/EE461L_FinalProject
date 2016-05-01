@@ -1,8 +1,11 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -23,6 +26,14 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_single_recipe);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myToolbar.setTitleTextColor(Color.WHITE);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         Bundle data = getIntent().getExtras();
 
@@ -45,6 +56,10 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                 InputStream is = (InputStream) new URL(url).getContent();
                 Drawable d = Drawable.createFromStream(is, r.title);
                 recipeImage.setImageDrawable(d);
+
+                recipeTitle.setText(r.title);
+                servings.setText(r.servings.toString());
+                readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
             } catch (Exception e) {
                 Log.d("Error", e.toString());
