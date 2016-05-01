@@ -29,30 +29,30 @@ public class ShowRecipesActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recipeList = (ListView) findViewById(R.id.showRecipes);
-        Log.d("thing", getIntent().toString());
         Bundle data = getIntent().getExtras();
         if (data != null) {
             RecipeSearchParameters rsp = data.getParcelable("RSP");
             List<RecipeSearchResult> rsr;
             FoodAPI api = FoodAPI.getInstance();
-            if (!rsp.getQuery().equals("")) { // Use query recipe search
-                try {
-                    rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
-                            rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
-                            5, rsp.getOffset(), rsp.getQuery(), rsp.getType());
-                    recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
-                    Log.d("goodbye", "" + rsr.size());
-                } catch(Exception e) {
-                    Log.d("shit", e.toString());
-                }
-            } else {
-                try {
-                    rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
-                            rsp.isLimitLicense(), 5, rsp.getRanking());
-                    recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
-                    Log.d("Hello", "" + rsr.size());
-                } catch(Exception e) {
-                    Log.d("sit", e.toString());
+
+            if (rsp != null) {
+                if (!rsp.getQuery().equals("")) { // Use query recipe search
+                    try {
+                        rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
+                                rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
+                                5, rsp.getOffset(), rsp.getQuery(), rsp.getType());
+                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
+                    } catch (Exception e) {
+                        Log.d("shit", e.toString());
+                    }
+                } else {
+                    try {
+                        rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
+                                rsp.isLimitLicense(), 5, rsp.getRanking());
+                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
+                    } catch (Exception e) {
+                        Log.d("sit", e.toString());
+                    }
                 }
             }
         }

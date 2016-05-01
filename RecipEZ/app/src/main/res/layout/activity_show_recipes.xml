@@ -16,20 +16,12 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-    <TextView
-        android:id="@+id/recipeListTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="0sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
     
     <ListView
         android:id="@+id/showRecipes"
-        android:layout_below="@+id/recipeListTitle"
+        android:layout_below="@+id/my_toolbar"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent" >
     </ListView>
 
 </RelativeLayout>
