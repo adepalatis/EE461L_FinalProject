@@ -99,4 +99,8 @@
     <string name="server_client_id">185165070366-e38bbciadoo3rk8f5gofl1jc32m1efvv.apps.googleusercontent.com</string>
 
     <string name="searchResultsTitle">Results</string>
+
+    <string name="servings">Servings</string>
+
+    <string name="placeholder">Text</string>
 </resources>
