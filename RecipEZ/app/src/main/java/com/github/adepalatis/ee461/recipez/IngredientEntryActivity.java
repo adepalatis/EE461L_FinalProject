@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,7 +33,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngredientEntryActivity extends AppCompatActivity
         implements View.OnClickListener, AdapterView.OnItemSelectedListener, MultiSpinner.MultiSpinnerListener {
@@ -46,7 +50,7 @@ public class IngredientEntryActivity extends AppCompatActivity
     private ArrayList<String> selectedType;
 
 
-    private EditText ingredientEntryBox;
+    private AutoCompleteTextView ingredientEntryBox;
     private GridView ingredientsGrid;
     private Button searchButton;
     private Button addButton;
@@ -85,7 +89,14 @@ public class IngredientEntryActivity extends AppCompatActivity
         selectedDiets = new ArrayList<String>();
         selectedType = new ArrayList<String>();
         selectedIntolerances = new ArrayList<String>();
-        ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
+
+        ingredientEntryBox = (AutoCompleteTextView) findViewById(R.id.ingredientEntryBox);
+        final List<String> toDisplay = new ArrayList<String>();
+        toDisplay.add("hii");
+        toDisplay.add("byee");
+        toDisplay.add("arrayLit");
+        final ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,toDisplay);
+        ingredientEntryBox.setAdapter(autoCompleteAdapter);
         ingredientEntryBox.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -96,6 +107,38 @@ public class IngredientEntryActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        ingredientEntryBox.addTextChangedListener(new TextWatcher()
+        {
+            String text;
+            List<Ingredient> toConvert;
+            @Override
+            public void afterTextChanged(Editable mEdit)
+            {
+                text = mEdit.toString();
+                if(text.equals("")) {
+                    autoCompleteAdapter.clear();
+                    autoCompleteAdapter.notifyDataSetChanged();
+                    return;
+                }
+                try {
+                    toConvert = FoodAPI.getInstance().searchIngredient(text);
+                    toConvert = toConvert.subList(0,5);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                autoCompleteAdapter.clear();
+                for(Ingredient i : toConvert) {
+                    autoCompleteAdapter.add(i.getName());
+                }
+                autoCompleteAdapter.notifyDataSetChanged();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+
         // Configure listeners
         try {
             searchButton.setOnClickListener(this);
