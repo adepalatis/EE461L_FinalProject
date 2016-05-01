@@ -70,7 +70,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         setContentView(R.layout.activity_ingredient_entry);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
+        myToolbar.setTitleTextColor(Color.WHITE);
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);

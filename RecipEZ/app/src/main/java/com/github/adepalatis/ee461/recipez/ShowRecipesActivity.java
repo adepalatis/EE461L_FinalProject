@@ -1,6 +1,7 @@
 package com.github.adepalatis.ee461.recipez;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -32,6 +33,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myToolbar.setTitleTextColor(Color.WHITE);
         recipeList = (ListView) findViewById(R.id.showRecipes);
         Bundle data = getIntent().getExtras();
         if (data != null) {
