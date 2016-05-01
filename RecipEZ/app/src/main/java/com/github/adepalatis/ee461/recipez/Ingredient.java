@@ -7,12 +7,12 @@ import android.os.Parcelable;
  * Created by michael on 4/20/16.
  */
 public class Ingredient implements Parcelable {
-    private String aisle = null;
-    private String name = null;
-    private String unit = null;
-    private String originalString = null;
-    private String image = null;
-    private Double amount = null;
+    private String aisle = "";
+    private String name = "";
+    private String unit = "";
+    private String originalString = "";
+    private String image = "";
+    private Double amount = -1.0;
 
     public String getAisle() {
         return aisle;
@@ -121,7 +121,12 @@ public class Ingredient implements Parcelable {
         dest.writeString(unit);
         dest.writeString(originalString);
         dest.writeString(image);
-        dest.writeDouble(amount);
+
+        if (amount == null) {
+            dest.writeDouble(-1.0);
+        } else {
+            dest.writeDouble(amount);
+        }
     }
 
     public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {

@@ -3,6 +3,7 @@ package com.github.adepalatis.ee461.recipez;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,9 @@ import android.widget.ExpandableListView;
 import android.widget.GridLayout;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,7 +47,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                                 5, rsp.getOffset(), rsp.getQuery(), rsp.getType());
                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                     } catch (Exception e) {
-                        Log.d("shit", e.toString());
+                        Log.d("Error", e.toString());
                     }
                 } else {
                     try {
@@ -51,7 +55,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                                 rsp.isLimitLicense(), 5, rsp.getRanking());
                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                     } catch (Exception e) {
-                        Log.d("sit", e.toString());
+                        Log.d("Error", e.toString());
                     }
                 }
             }
@@ -71,6 +75,8 @@ public class ShowRecipesActivity extends AppCompatActivity {
     public void transitionToNext(RecipeSearchResult r) {
         Intent i = new Intent(this, ShowSingleRecipeActivity.class);
         i.putExtra("recipeId", r.id);
+        i.putParcelableArrayListExtra("missingIngredients", new ArrayList<>(Arrays.asList(r.missedIngredients)));
+        i.putParcelableArrayListExtra("usedIngredients", new ArrayList<>(Arrays.asList(r.usedIngredients)));
         startActivity(i);
     }
 

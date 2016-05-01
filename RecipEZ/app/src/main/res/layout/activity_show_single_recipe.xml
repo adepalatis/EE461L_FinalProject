@@ -7,9 +7,10 @@
     tools:context="com.github.adepalatis.ee461.recipez.ShowSingleRecipeActivity">
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recipeImage"
+        android:scaleType="fitCenter"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
