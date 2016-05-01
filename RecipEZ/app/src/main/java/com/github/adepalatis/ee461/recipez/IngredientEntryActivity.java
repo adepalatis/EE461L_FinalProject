@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -34,9 +36,12 @@ public class IngredientEntryActivity extends AppCompatActivity
     private MultiSpinner cuisineSpinner;
     private MultiSpinner dietSpinner;
     private MultiSpinner intoleranceSpinner;
+    private MultiSpinner typeSpinner;
     private ArrayList<String> selectedCuisines;
     private ArrayList<String> selectedDiets;
     private ArrayList<String> selectedIntolerances;
+    private ArrayList<String> selectedType;
+
 
     private EditText ingredientEntryBox;
     private GridView ingredientsGrid;
@@ -60,12 +65,17 @@ public class IngredientEntryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 //        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_ingredient_entry);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
         intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
+        typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
+
         ingredientEntryBox = (EditText)findViewById(R.id.ingredientEntryBox);
         ingredientsGrid = (GridView)findViewById(R.id.selectedIngredientsGrid);
         searchButton = (Button)findViewById(R.id.searchButton);
@@ -73,6 +83,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         selectedIngredients = new ArrayList<CharSequence>();
         selectedCuisines = new ArrayList<String>();
         selectedDiets = new ArrayList<String>();
+        selectedType = new ArrayList<String>();
         selectedIntolerances = new ArrayList<String>();
 
         // Configure listeners
@@ -83,6 +94,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             cuisineSpinner.setOnItemSelectedListener(this);
             dietSpinner.setOnItemSelectedListener(this);
             intoleranceSpinner.setOnItemSelectedListener(this);
+            typeSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
         } catch(Exception e) {
             System.err.println(e.toString());
@@ -92,6 +104,7 @@ public class IngredientEntryActivity extends AppCompatActivity
         cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
         dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
         intoleranceSpinner.setItems(getResources().getStringArray(R.array.allergy_array), this);
+        typeSpinner.setItems(getResources().getStringArray(R.array.type), this);
         // Configure the google API client
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
@@ -134,7 +147,20 @@ public class IngredientEntryActivity extends AppCompatActivity
                 case R.id.intoleranceSpinner:
                     if(selected[k]) { selectedIntolerances.add(intoleranceSpinner.getItems()[k]);}
                     break;
+                case R.id.typeSpinner:
+                    if(selected[k]) {selectedType.add(typeSpinner.getItems()[k]);}
             }
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
         }
     }
 
@@ -160,6 +186,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
                 RSP.setCuisine(selectedCuisines);
                 RSP.setDiet(selectedDiets);
+                RSP.setType(selectedType);
                 RSP.setIntolerance(selectedIntolerances);
                 RSP.setExcludeIngredients(new ArrayList<Ingredient>());
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);

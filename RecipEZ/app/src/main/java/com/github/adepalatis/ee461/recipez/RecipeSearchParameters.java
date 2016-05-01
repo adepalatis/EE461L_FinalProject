@@ -80,6 +80,13 @@ public class RecipeSearchParameters implements Parcelable {
         this.type = type;
     }
 
+    public void setType(ArrayList<String> type) {
+        if(type!=null && !type.isEmpty())
+        {
+            this.type = type.get(0);
+        }
+    }
+
     public List<Ingredient> getIngredients() {
         return ingredients;
     }

@@ -58,6 +58,21 @@
         <item>Vegan</item>
     </string-array>
 
+    <string-array name="type">
+        <item>N/A</item>
+        <item>Main course</item>
+        <item>Side dish</item>
+        <item>Dessert</item>
+        <item>Appetizer</item>
+        <item>Salad</item>
+        <item>Bread</item>
+        <item>Breakfast</item>
+        <item>Soup</item>
+        <item>Beverage</item>
+        <item>Sauce</item>
+        <item>Drink</item>
+    </string-array>
+
     <string-array name="allergy_array">
         <item>N/A</item>
         <item>Dairy</item>

@@ -6,8 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/blue_grey_900"
     android:orientation="vertical"
-    tools:context=".IngredientEntryActivity">
-
+    tools:context=".IngredientEntryActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -31,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Find Recipes"
             android:id="@+id/searchButton"
-            android:layout_above="@+id/signOutButton"
+            android:layout_alignTop="@+id/signOutButton"
             android:layout_centerHorizontal="true" />
 
         <GridView
@@ -117,7 +125,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Intolerances:"
                 android:id="@+id/textView3"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="49dp"
                 android:textColor="#ffffff"
                 android:layout_below="@+id/textView2"
                 android:layout_alignParentStart="true" />
@@ -127,7 +135,26 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/intoleranceSpinner"
                 android:layout_alignBottom="@+id/textView3"
-                android:layout_alignStart="@+id/dietSpinner" />
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Dish type:"
+                android:id="@+id/textView4"
+                android:textColor="#ffffff"
+                android:layout_alignTop="@+id/typeSpinner"
+                android:layout_alignParentStart="true" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeSpinner"
+                android:layout_below="@+id/intoleranceSpinner"
+                android:layout_alignStart="@+id/intoleranceSpinner"
+                android:layout_marginTop="36dp" />
+
         </RelativeLayout>
 
 
