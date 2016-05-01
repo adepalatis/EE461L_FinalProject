@@ -3,11 +3,15 @@
     package="com.github.adepalatis.ee461.recipez">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".RecipEZApp"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true">
+
         <activity
             android:name=".GoogleLoginActivity"
             android:label="@string/app_name"
@@ -22,12 +26,18 @@
             android:name=".IngredientEntryActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity
             android:name=".ShowRecipesActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ShowSingleRecipeActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ShowSingleRecipeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
