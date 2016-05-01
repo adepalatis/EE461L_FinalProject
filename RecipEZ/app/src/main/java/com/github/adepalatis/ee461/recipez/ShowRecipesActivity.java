@@ -2,6 +2,8 @@ package com.github.adepalatis.ee461.recipez;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -34,6 +36,9 @@ public class ShowRecipesActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myToolbar.setTitleTextColor(Color.WHITE);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         recipeList = (ListView) findViewById(R.id.showRecipes);
         Bundle data = getIntent().getExtras();
         if (data != null) {
