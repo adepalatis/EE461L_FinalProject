@@ -116,4 +116,8 @@
 
     <string name="nutrientValue">Amount</string>
     <string name="nutrientPercentDaily">%DV</string>
+
+    <string name="pantry">Pantry</string>
+    <string name="search">Search</string>
+    <string name="recipe">Recipe</string>
 </resources>

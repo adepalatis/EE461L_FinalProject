@@ -4,10 +4,7 @@ package com.github.adepalatis.ee461.recipez;
  * Created by Tony on 3/27/2016.
  */
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,12 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -77,9 +69,9 @@ public class IngredientEntryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 //        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_ingredient_entry);
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setTitleTextColor(Color.WHITE);
 
         // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
@@ -272,7 +264,7 @@ public class IngredientEntryActivity extends AppCompatActivity
 
             case R.id.signOutButton:
                 signOut();
-                startActivity(new Intent(this, GoogleLoginActivity.class));
+                startActivity(new Intent(this, HomeScreenActivity.class));
                 break;
 
             // DUMMY BUTTON FOR TRANSITIONING TO QUERYENTRYACTIVITY
