@@ -68,6 +68,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
@@ -79,6 +80,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(menuItem);
         }
     }
+
     public void transitionToNext(RecipeSearchResult r) {
         Intent i = new Intent(this, ShowSingleRecipeActivity.class);
         i.putExtra("recipeId", r.id);

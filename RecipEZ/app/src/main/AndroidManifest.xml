@@ -29,6 +29,12 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
+            android:name=".QueryEntryActivity"
+            android:label="RecipEZ"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
             android:name=".ShowRecipesActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_grey_900"
+    android:orientation="vertical"
+    tools:context=".IngredientEntryActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff">
+
+        <AutoCompleteTextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ingredientEntryBox"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="32dp"
+            android:hint="Recipe Keyword"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:backgroundTint="@color/nephritis"
+            android:textCursorDrawable="@null"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find Recipes"
+            android:id="@+id/searchButton"
+            android:layout_above="@+id/relativeLayout"
+            android:layout_centerHorizontal="true" />
+
+        GridView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:id="@+id/selectedIngredientsGrid"
+            android:numColumns="4"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="6dp"
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="0"
+            android:layout_below="@+id/ingredientEntryBox"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/addButton"
+            android:layout_alignTop="@+id/ingredientEntryBox"
+            android:layout_alignEnd="@+id/selectedIngredientsGrid"
+            android:visibility="gone" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:id="@+id/signOutButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible" />
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="#27ae60"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Cuisine (Optional):"
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="35dp"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Dietary Restrictions (Optional):"
+                android:id="@+id/textView2"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="40dp"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/cuisineSpinner"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:layout_alignBottom="@+id/textView"
+                android:layout_alignParentEnd="true" />
+
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:scrollbarFadeDuration="0"
+                android:id="@+id/dietSpinner"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Intolerances (Optional):"
+                android:id="@+id/textView3"
+                android:layout_marginTop="40dp"
+                android:textColor="#ffffff"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/intoleranceSpinner"
+                android:scrollbarFadeDuration="0"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Dish type (Optional):"
+                android:id="@+id/textView4"
+                android:layout_marginTop="40dp"
+                android:textColor="#ffffff"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp" />
+
+            <com.github.adepalatis.ee461.recipez.MultiSpinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeSpinner"
+                android:scrollbarFadeDuration="0"
+                android:layout_below="@+id/intoleranceSpinner"
+                android:layout_alignStart="@+id/intoleranceSpinner"
+                android:layout_marginTop="36dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>
