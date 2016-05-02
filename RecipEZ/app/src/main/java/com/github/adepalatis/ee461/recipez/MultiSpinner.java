@@ -38,12 +38,48 @@ public class MultiSpinner extends Spinner implements
 
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-        if (isChecked)
+        if (isChecked) {
+            if (which != 0) {
+                uncheckAny((AlertDialog) dialog);
+            }
+            if (which == 0) {
+                uncheckAllElements((AlertDialog) dialog);
+            }
             selected[which] = true;
+        }
         else
             selected[which] = false;
+            if(allUncheckedExceptAny((AlertDialog) dialog) == true)
+                checkAny((AlertDialog) dialog);
+
     }
 
+    private boolean allUncheckedExceptAny(AlertDialog dialog) {
+        for(int i = 1; i < items.length; i++)
+        {
+            if(selected[i] == true)
+                return false;
+        }
+        return true;
+    }
+
+    private void checkAny(AlertDialog dialog) {
+        selected[0] = true;
+        ((AlertDialog) dialog).getListView().setItemChecked(0, true);
+    }
+
+    private void uncheckAny(AlertDialog dialog) {
+        selected[0] = false;
+        ((AlertDialog) dialog).getListView().setItemChecked(0, false);
+    }
+
+    private void uncheckAllElements(AlertDialog dialog) {
+        for(int i = 1; i < items.length; i++)
+        {
+            selected[i] = false;
+            ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+        }
+    }
     @Override
     public void onCancel(DialogInterface dialog) {
         // refresh text on spinner
