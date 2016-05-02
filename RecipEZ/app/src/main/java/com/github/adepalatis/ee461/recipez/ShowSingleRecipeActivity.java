@@ -95,13 +95,21 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                 servings.setText(r.servings.toString());
                 readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
-                IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
-                m.setInflater(this);
-                IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
-                u.setInflater(this);
+                if(usedIngredients != null && !usedIngredients.isEmpty()) {
+                    IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
+                    m.setInflater(this);
+                    missing.setAdapter(m);
 
-                missing.setAdapter(m);
-                used.setAdapter(u);
+                    IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
+                    u.setInflater(this);
+                    used.setAdapter(u);
+                } else {
+                    ((TextView)findViewById(R.id.missingTV)).setVisibility(View.GONE);
+                    ((TextView)findViewById(R.id.usedTV)).setVisibility(View.GONE);
+                }
+
+
+
 
                 justifyListViewHeightBasedOnChildren(missing);
                 justifyListViewHeightBasedOnChildren(used);
