@@ -1,8 +1,13 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,11 +22,16 @@ import android.widget.Adapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ShowSingleRecipeActivity extends AppCompatActivity {
@@ -29,6 +39,8 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     ImageView recipeImage;
     TextView recipeTitle, servings, readyIn;
     ListView missing, used;
+    TableLayout table;
+    Recipe r;
 
     //used for back button
     @Override
@@ -39,9 +51,14 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.nutrition_info:
-                int a = 1;
+                final Dialog d = new Dialog(this);
+                d.setContentView(R.layout.nutrition_dialog);
+                d.setTitle("Nutrition Information");
+                d.show();
                 return true;
             case R.id.show_recipe:
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(r.sourceUrl));
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
@@ -87,9 +104,10 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             readyIn = (TextView) findViewById(R.id.minutes);
             missing = (ListView) findViewById(R.id.missingIngredientsList);
             used = (ListView) findViewById(R.id.usedIngredientsList);
+            table = (TableLayout) findViewById(R.id.nutrientTable);
 
             try {
-                Recipe r = FoodAPI.getInstance().getRecipe(recipeId, true);
+                r = FoodAPI.getInstance().getRecipe(recipeId, true);
 
                 String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
                 InputStream is = (InputStream) new URL(url).getContent();
@@ -111,10 +129,12 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                 justifyListViewHeightBasedOnChildren(missing);
                 justifyListViewHeightBasedOnChildren(used);
 
-                missing.setEnabled(false);
-                missing.setOnClickListener(null);
-                used.setEnabled(false);
-                used.setOnClickListener(null);
+//                missing.setEnabled(false);
+//                missing.setOnClickListener(null);
+//                used.setEnabled(false);
+//                used.setOnClickListener(null);
+
+                init();
             } catch (Exception e) {
                 Log.d("Error", e.toString());
             }
@@ -151,4 +171,28 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
         listView.requestLayout();
     }
 
+    private void init() {
+        List<Nutrient> nutrition = Arrays.asList(r.nutrition.nutrients);
+
+        Log.d("table", Integer.toString(nutrition.size()));
+        for (Nutrient n: nutrition) {
+            TableRow row = new TableRow(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(params);
+
+            TextView name = new TextView(this);
+            name.setText(n.title);
+            row.addView(name);
+
+            TextView amount = new TextView(this);
+            amount.setText(n.amount + " " + n.unit);
+            row.addView(amount);
+
+            TextView percent = new TextView(this);
+            percent.setText(n.percentOfDailyNeeds + "%");
+            row.addView(percent);
+
+            table.addView(row);
+        }
+    }
 }

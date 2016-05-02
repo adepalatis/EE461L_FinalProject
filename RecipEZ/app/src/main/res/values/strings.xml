@@ -112,4 +112,8 @@
     <string name="used">Owned Ingredients</string>
 
     <string name="minutes">minutes</string>
+    <string name="nutrientName">Nutrient</string>
+
+    <string name="nutrientValue">Amount</string>
+    <string name="nutrientPercentDaily">%DV</string>
 </resources>

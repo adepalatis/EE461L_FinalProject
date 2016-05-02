@@ -258,9 +258,6 @@ public class IngredientEntryActivity extends AppCompatActivity
                 RSP.setExcludeIngredients(new ArrayList<Ingredient>());
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);
-
-//                if(nextActivity.getExtras() == null) { Log.d("wtf", "wtf"); }
-                Log.d("thing2", nextActivity.toString());
                 startActivity(nextActivity);
                 break;
 
