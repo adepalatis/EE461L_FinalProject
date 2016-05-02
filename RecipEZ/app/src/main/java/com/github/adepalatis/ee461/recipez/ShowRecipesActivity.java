@@ -51,7 +51,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                     try {
                         rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
                                 rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
-                                rsp.getMaxNumber(), rsp.getOffset(), rsp.getQuery(), rsp.getType());
+                                5, rsp.getOffset(), rsp.getQuery(), rsp.getType());
                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                     } catch (Exception e) {
                         Log.d("Error", e.toString());
@@ -59,7 +59,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                 } else {
                     try {
                         rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
-                                rsp.isLimitLicense(), rsp.getMaxNumber(), rsp.getRanking());
+                                rsp.isLimitLicense(), 5, rsp.getRanking());
                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
                     } catch (Exception e) {
                         Log.d("Error", e.toString());

@@ -1,140 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.adepalatis.ee461.recipez.ShowSingleRecipeActivity">
+    tools:context="com.github.adepalatis.ee461.recipez.ShowSingleRecipeActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/CustomWhiteStyle"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_below="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/CustomWhiteStyle"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <FrameLayout
-            android:id="@+id/header"
+        <ImageView
+            android:id="@+id/recipeViewImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/my_toolbar">
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
-            <ImageView
-                android:id="@+id/recipeViewImage"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/recipeViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter" />
+                android:background="@color/nephritis_70"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+    <TextView
+        android:id="@+id/servings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/header"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/servings"
+        android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/recipeViewTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/nephritis_70"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp" />
-            </LinearLayout>
-        </FrameLayout>
+    <TextView
+        android:id="@+id/numServings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/header"
+        android:layout_below="@+id/header"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/placeholder"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/servings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/header"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/servings"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/readyIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/servings"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/readyIn"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/numServings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/header"
-            android:layout_below="@+id/header"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/placeholder"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/numServings"
+        android:layout_marginEnd="15dp"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/readyIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/servings"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/readyIn"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/missingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/readyIn"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/missing"
+        android:textStyle="bold"
+        android:textColor="@color/nephritis"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/minutes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/numServings"
-            android:layout_marginEnd="15dp"
-            android:textSize="18sp" />
+    <ListView
+        android:id="@+id/missingIngredientsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/missingTV"
+        android:layout_margin="15dp"
+        android:groupIndicator="@null">
 
-        <TextView
-            android:id="@+id/missingTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/readyIn"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/missing"
-            android:textColor="@color/nephritis"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    </ListView>
 
-        <ListView
-            android:id="@+id/missingIngredientsList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/missingTV"
-            android:layout_margin="15dp"
-            android:groupIndicator="@null">
+    <TextView
+        android:id="@+id/usedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/missingIngredientsList"
+        android:layout_marginStart="15dp"
+        android:text="@string/used"
+        android:textStyle="bold"
+        android:textColor="@color/nephritis"
+        android:textSize="20sp" />
 
-        </ListView>
+    <ListView
+        android:id="@+id/usedIngredientsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usedTV"
+        android:layout_margin="15dp"
+        android:groupIndicator="@null">
 
-        <TextView
-            android:id="@+id/usedTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/missingIngredientsList"
-            android:layout_marginStart="15dp"
-            android:text="@string/used"
-            android:textColor="@color/nephritis"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    </ListView>
 
-        <ListView
-            android:id="@+id/usedIngredientsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/usedTV"
-            android:layout_margin="15dp"
-            android:groupIndicator="@null">
-
-        </ListView>
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>
