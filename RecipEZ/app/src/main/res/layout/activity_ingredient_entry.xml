@@ -39,8 +39,6 @@
             android:textCursorDrawable="@null"
             />
 
-
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#27ae60"
-            android:layout_below="@+id/searchButton">
+            android:layout_below="@+id/searchButton"
+            android:id="@+id/relativeLayout">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +117,8 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/cuisineSpinner"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:layout_alignBottom="@+id/textView"
                 android:layout_alignParentEnd="true" />
 
@@ -125,6 +126,7 @@
             <com.github.adepalatis.ee461.recipez.MultiSpinner
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:scrollbarFadeDuration="0"
                 android:id="@+id/dietSpinner"
                 android:layout_alignBottom="@+id/textView2"
                 android:layout_alignParentEnd="true" />
@@ -145,6 +147,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/intoleranceSpinner"
+                android:scrollbarFadeDuration="0"
                 android:layout_alignBottom="@+id/textView3"
                 android:layout_alignParentEnd="true" />
 
@@ -164,6 +167,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/typeSpinner"
+                android:scrollbarFadeDuration="0"
                 android:layout_below="@+id/intoleranceSpinner"
                 android:layout_alignStart="@+id/intoleranceSpinner"
                 android:layout_marginTop="36dp" />

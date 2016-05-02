@@ -19,6 +19,8 @@
     <string name="auth_code_fmt">Auth Code: %s</string>
     <string name="id_token_fmt">ID Token: %s</string>
 
+    <string name="no_ingredients_message">Please enter at least one ingredient.</string>
+
     <!-- Ingredient and other info entry messages -->
     <string name="ingredient">Ingredient</string>
     <string-array name="cuisine_array">
