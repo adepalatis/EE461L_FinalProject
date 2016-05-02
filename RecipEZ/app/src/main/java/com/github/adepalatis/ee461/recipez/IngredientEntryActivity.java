@@ -60,6 +60,8 @@ public class IngredientEntryActivity extends AppCompatActivity
     private ArrayList<CharSequence> selectedIngredients;
     private GoogleApiClient mGoogleApiClient;
 
+    private Button dummy;
+
     // Handles removing ingredients from the grid when user clicks on them
     public class IngredientClickListener implements AdapterView.OnItemClickListener {
 
@@ -92,6 +94,8 @@ public class IngredientEntryActivity extends AppCompatActivity
         selectedDiets = new ArrayList<String>();
         selectedType = new ArrayList<String>();
         selectedIntolerances = new ArrayList<String>();
+
+        dummy = (Button)findViewById(R.id.button);
 
         ingredientEntryBox = (AutoCompleteTextView) findViewById(R.id.ingredientEntryBox);
         final List<String> toDisplay = new ArrayList<String>();
@@ -154,6 +158,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             intoleranceSpinner.setOnItemSelectedListener(this);
             typeSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
+            dummy.setOnClickListener(this);
         } catch(Exception e) {
             System.err.println(e.toString());
         }
@@ -268,6 +273,11 @@ public class IngredientEntryActivity extends AppCompatActivity
             case R.id.signOutButton:
                 signOut();
                 startActivity(new Intent(this, GoogleLoginActivity.class));
+                break;
+
+            case R.id.button:
+                Log.d("button", "button clicked");
+                startActivity(new Intent(this, QueryEntryActivity.class));
                 break;
         }
     }
