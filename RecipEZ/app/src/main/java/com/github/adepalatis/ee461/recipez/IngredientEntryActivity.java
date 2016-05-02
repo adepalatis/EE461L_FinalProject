@@ -275,6 +275,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 startActivity(new Intent(this, GoogleLoginActivity.class));
                 break;
 
+            // DUMMY BUTTON FOR TRANSITIONING TO QUERYENTRYACTIVITY
             case R.id.button:
                 Log.d("button", "button clicked");
                 startActivity(new Intent(this, QueryEntryActivity.class));

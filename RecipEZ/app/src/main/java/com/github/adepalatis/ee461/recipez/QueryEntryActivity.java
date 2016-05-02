@@ -1,5 +1,8 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,11 +73,60 @@ public class QueryEntryActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-
+        // Don't start the next activity until the user enters ingredients
+        if(queryEntryBox.getText().toString().equals("")) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+            builder1.setMessage("Enter at least one ingredient");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+            return;
+        }
+        String query = queryEntryBox.getText().toString();
+        RecipeSearchParameters RSP = new RecipeSearchParameters(query);
+        RSP.setCuisine(selectedCuisines);
+        RSP.setDiet(selectedDiets);
+        RSP.setType(selectedType);
+        RSP.setIntolerance(selectedIntolerances);
+        RSP.setExcludeIngredients(new ArrayList<Ingredient>());
+        Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
+        nextActivity.putExtra("RSP", RSP);
+        startActivity(nextActivity);
     }
 
     @Override
     public void onItemsSelected(View v, boolean[] selected) {
+        for(int k = 0; k < selected.length; k++) {
 
+            switch (v.getId()) {
+                case R.id.cuisineSpinner:
+                    if (selected[k]) {
+                        selectedCuisines.add(cuisineSpinner.getItems()[k]);
+                    }
+                    break;
+                case R.id.dietSpinner:
+                    if (selected[k]) {
+                        selectedDiets.add(dietSpinner.getItems()[k]);
+                    }
+                    break;
+                case R.id.intoleranceSpinner:
+                    if (selected[k]) {
+                        selectedIntolerances.add(intoleranceSpinner.getItems()[k]);
+                    }
+                    break;
+                case R.id.typeSpinner:
+                    if (selected[k]) {
+                        selectedType.add(typeSpinner.getItems()[k]);
+                    }
+            }
+        }
     }
+
 }
