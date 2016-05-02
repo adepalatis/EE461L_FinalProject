@@ -106,5 +106,10 @@
 
     <string name="placeholder">Text</string>
 
+    <string name="readyIn">Ready In</string>
+
+    <string name="missing">Missing Ingredients</string>
+    <string name="used">Owned Ingredients</string>
+
     <string name="minutes">minutes</string>
 </resources>
