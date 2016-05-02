@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,12 @@ public class IngredientsListViewAdapter extends BaseAdapter {
     }
 
     public IngredientsListViewAdapter(List<String> i) {
-        this.ingredients = i;
+        if (i.size() == 0) {
+            this.ingredients = new ArrayList<>();
+            this.ingredients.add("None");
+        } else {
+            this.ingredients = i;
+        }
     }
 
     public void setInflater(Activity a) {
