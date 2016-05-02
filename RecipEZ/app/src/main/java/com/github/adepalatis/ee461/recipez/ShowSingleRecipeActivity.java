@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -53,7 +55,7 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             case R.id.nutrition_info:
                 final Dialog d = new Dialog(this);
                 d.setContentView(R.layout.nutrition_dialog);
-                d.setTitle("Nutrition Information");
+                init(d);
                 d.show();
                 return true;
             case R.id.show_recipe:
@@ -104,7 +106,6 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             readyIn = (TextView) findViewById(R.id.minutes);
             missing = (ListView) findViewById(R.id.missingIngredientsList);
             used = (ListView) findViewById(R.id.usedIngredientsList);
-            table = (TableLayout) findViewById(R.id.nutrientTable);
 
             try {
                 r = FoodAPI.getInstance().getRecipe(recipeId, true);
@@ -133,8 +134,6 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
 //                missing.setOnClickListener(null);
 //                used.setEnabled(false);
 //                used.setOnClickListener(null);
-
-                init();
             } catch (Exception e) {
                 Log.d("Error", e.toString());
             }
@@ -171,11 +170,13 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
         listView.requestLayout();
     }
 
-    private void init() {
+    private void init(Dialog d) {
         List<Nutrient> nutrition = Arrays.asList(r.nutrition.nutrients);
-
+        table = (TableLayout) d.findViewById(R.id.nutrientTable);
         Log.d("table", Integer.toString(nutrition.size()));
+
         for (Nutrient n: nutrition) {
+            Log.d("table", n.title);
             TableRow row = new TableRow(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(params);
