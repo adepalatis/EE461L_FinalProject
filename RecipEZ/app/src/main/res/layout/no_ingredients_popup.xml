@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:layout_width="205dp"
+    android:layout_height="wrap_content"
+    android:text="Please enter at least one ingredient."
+    android:id="@+id/no_ingredient_popup"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:layout_weight="0.20"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+</TextView>
