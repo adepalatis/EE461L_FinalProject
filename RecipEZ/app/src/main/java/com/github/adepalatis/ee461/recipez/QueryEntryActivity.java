@@ -20,8 +20,12 @@ import java.util.List;
  * Created by Tony on 5/2/2016.
  */
 public class QueryEntryActivity extends AppCompatActivity
-        implements View.OnClickListener {
+        implements View.OnClickListener, MultiSpinner.MultiSpinnerListener {
 
+    private MultiSpinner cuisineSpinner;
+    private MultiSpinner dietSpinner;
+    private MultiSpinner intoleranceSpinner;
+    private MultiSpinner typeSpinner;
     private ArrayList<String> selectedCuisines;
     private ArrayList<String> selectedDiets;
     private ArrayList<String> selectedIntolerances;
@@ -37,7 +41,12 @@ public class QueryEntryActivity extends AppCompatActivity
         setSupportActionBar(myToolbar);
         myToolbar.setTitleTextColor(Color.WHITE);
 
-        // Initialize lists of selected filters
+        // Initialize spinners, search button, and lists of selected filters
+        cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
+        dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
+        intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
+        typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
+        searchButton = (Button)findViewById(R.id.searchButton);
         selectedCuisines = new ArrayList<String>();
         selectedDiets = new ArrayList<String>();
         selectedType = new ArrayList<String>();
@@ -45,6 +54,13 @@ public class QueryEntryActivity extends AppCompatActivity
 
         queryEntryBox = (EditText)findViewById(R.id.queryEntryBox);
 
+        // Configure the filter spinners' values and set this activity as a listener
+        cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
+        dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
+        intoleranceSpinner.setItems(getResources().getStringArray(R.array.allergy_array), this);
+        typeSpinner.setItems(getResources().getStringArray(R.array.type), this);
+
+        // Configure listeners
         try {
             searchButton.setOnClickListener(this);
         } catch(Exception e) {
@@ -54,6 +70,11 @@ public class QueryEntryActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onItemsSelected(View v, boolean[] selected) {
 
     }
 }
