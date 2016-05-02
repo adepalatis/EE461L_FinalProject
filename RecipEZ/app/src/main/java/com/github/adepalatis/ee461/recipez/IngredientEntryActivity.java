@@ -53,8 +53,6 @@ public class IngredientEntryActivity extends AppCompatActivity
     private ArrayList<String> selectedDiets;
     private ArrayList<String> selectedIntolerances;
     private ArrayList<String> selectedType;
-
-
     private AutoCompleteTextView ingredientEntryBox;
     private GridView ingredientsGrid;
     private Button searchButton;
@@ -289,7 +287,7 @@ public class IngredientEntryActivity extends AppCompatActivity
 
     public void addIngredientToGrid(CharSequence ingredient) {
         // Make sure "ingredient" has not already been entered
-        if(!selectedIngredients.contains(ingredient) && !ingredient.equals("")) {
+        if(!selectedIngredients.contains(ingredient) && !ingredient.equals("x")) {
             // Add "ingredient" to the list
             selectedIngredients.add(ingredient);
             updateGrid();
