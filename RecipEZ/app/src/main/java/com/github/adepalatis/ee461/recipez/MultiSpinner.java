@@ -119,10 +119,11 @@ public class MultiSpinner extends Spinner implements
             spinnerText = "Hello";
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.custom_spinner,
                 new String[] { spinnerText });
         setAdapter(adapter);
         listener.onItemsSelected(this, selected);
+
     }
 
     @Override
@@ -162,7 +163,7 @@ public class MultiSpinner extends Spinner implements
             selected[i] = false;
 
         // all text on the spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.custom_spinner, items);
         setAdapter(adapter);
     }
 
