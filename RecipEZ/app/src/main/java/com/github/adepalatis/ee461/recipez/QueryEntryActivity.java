@@ -89,6 +89,7 @@ public class QueryEntryActivity extends AppCompatActivity
             alert11.show();
             return;
         }
+
         String query = queryEntryBox.getText().toString();
         RecipeSearchParameters RSP = new RecipeSearchParameters(query);
         RSP.setCuisine(selectedCuisines);

@@ -3,6 +3,7 @@ package com.github.adepalatis.ee461.recipez;
  * Created by michael on 4/20/16.
  */
 import android.os.StrictMode;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -181,14 +182,17 @@ public class FoodAPI {
                                    Integer maxNumber, Integer offset, String query, String type) {
 
         if (maxNumber != null && (maxNumber < 0 || maxNumber > 100 )) {
+            Log.d("maxNumber", "culprit");
             return false;
         }
 
         if (offset != null && (offset < 0 || offset > 900)) {
+            Log.d("offset", "culprit");
             return false;
         }
 
         if (query == null) {
+            Log.d("query", "culprit");
             return false;
         }
 
@@ -198,7 +202,8 @@ public class FoodAPI {
                     "greek german nordic eastern+european caribbean latin+american";
 
             for (String s: cuisine) {
-                if (!valid.contains(s)) {
+                if (!valid.contains(s.toLowerCase())) {
+                    Log.d("cuisine", "culprit");
                     return false;
                 }
             }
@@ -208,7 +213,8 @@ public class FoodAPI {
             String valid = "pescetarian lacto+vegetarian ovo+vegetarian vegan vegetarian";
 
             for (String s: diet) {
-                if (!valid.contains(s)) {
+                if (!valid.contains(s.toLowerCase())) {
+                    Log.d("diet", "culprit");
                     return false;
                 }
             }
@@ -219,7 +225,8 @@ public class FoodAPI {
                     "tree+nut wheat";
 
             for (String s: intolerance) {
-                if (!valid.contains(s)) {
+                if (!valid.contains(s.toLowerCase())) {
+                    Log.d("intolerance", "culprit");
                     return false;
                 }
             }
@@ -229,7 +236,8 @@ public class FoodAPI {
             String valid = "main+course side+dish dessert appetizer salad bread breakfast soup " +
                     "beverage sauce drink";
 
-            if (!valid.contains(type)) {
+            if (!valid.contains(type.toLowerCase())) {
+                Log.d("type", "culprit");
                 return false;
             }
         }
