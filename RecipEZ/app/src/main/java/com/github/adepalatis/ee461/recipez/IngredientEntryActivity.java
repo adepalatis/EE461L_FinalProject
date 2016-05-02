@@ -7,7 +7,6 @@ package com.github.adepalatis.ee461.recipez;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +31,12 @@ import com.google.android.gms.common.api.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class IngredientEntryActivity extends AppCompatActivity
         implements View.OnClickListener, AdapterView.OnItemSelectedListener, MultiSpinner.MultiSpinnerListener {
@@ -47,12 +51,8 @@ public class IngredientEntryActivity extends AppCompatActivity
     private ArrayList<String> selectedType;
     private AutoCompleteTextView ingredientEntryBox;
     private GridView ingredientsGrid;
-    private Button searchButton;
     private Button addButton;
     private ArrayList<CharSequence> selectedIngredients;
-    private GoogleApiClient mGoogleApiClient;
-
-    private Button dummy;
 
     // Handles removing ingredients from the grid when user clicks on them
     public class IngredientClickListener implements AdapterView.OnItemClickListener {
@@ -67,7 +67,6 @@ public class IngredientEntryActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_ingredient_entry);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -78,21 +77,22 @@ public class IngredientEntryActivity extends AppCompatActivity
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
         intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
         typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
-        ingredientsGrid = (GridView)findViewById(R.id.selectedIngredientsGrid);
-        searchButton = (Button)findViewById(R.id.searchButton);
-        addButton = (Button)findViewById(R.id.addButton);
-        selectedIngredients = new ArrayList<CharSequence>();
-        selectedCuisines = new ArrayList<String>();
-        selectedDiets = new ArrayList<String>();
-        selectedType = new ArrayList<String>();
-        selectedIntolerances = new ArrayList<String>();
+        ingredientsGrid = (GridView) findViewById(R.id.selectedIngredientsGrid);
+        Button searchButton = (Button) findViewById(R.id.searchButton);
+        addButton = (Button) findViewById(R.id.addButton);
+        selectedIngredients = new ArrayList<>();
+        selectedCuisines = new ArrayList<>();
+        selectedDiets = new ArrayList<>();
+        selectedType = new ArrayList<>();
+        selectedIntolerances = new ArrayList<>();
 
-        dummy = (Button)findViewById(R.id.button);
+        Button dummy = (Button) findViewById(R.id.button);
 
         ingredientEntryBox = (AutoCompleteTextView) findViewById(R.id.ingredientEntryBox);
-        final List<String> toDisplay = new ArrayList<String>();
-        final ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,toDisplay);
+        final List<String> toDisplay = new ArrayList<>();
+        final ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, toDisplay);
         ingredientEntryBox.setAdapter(autoCompleteAdapter);
+
         ingredientEntryBox.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -104,40 +104,60 @@ public class IngredientEntryActivity extends AppCompatActivity
             }
         });
 
-        ingredientEntryBox.addTextChangedListener(new TextWatcher()
-        {
+        ingredientEntryBox.addTextChangedListener(new TextWatcher() {
             String text;
             List<Ingredient> toConvert;
+
             @Override
-            public void afterTextChanged(Editable mEdit)
-            {
+            public void afterTextChanged(Editable mEdit) {
                 text = mEdit.toString();
-                if(text.equals("")) {
+
+                if (text.equals("")) {
                     autoCompleteAdapter.clear();
                     autoCompleteAdapter.notifyDataSetChanged();
                     return;
                 }
+
+                Callback c = new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.d("App", Arrays.toString(e.getStackTrace()));
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        toConvert = FoodAPI.getInstance().parseIngredientJson(response);
+                        if (toConvert.size() < 10) {
+                            toConvert = toConvert.subList(0, toConvert.size());
+                        } else {
+                            toConvert = toConvert.subList(0, 10);
+                        }
+
+                        IngredientEntryActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                autoCompleteAdapter.clear();
+                                for (Ingredient i : toConvert) {
+                                    autoCompleteAdapter.add(i.getName());
+                                }
+                                autoCompleteAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                };
+
                 try {
-                    toConvert = FoodAPI.getInstance().searchIngredient(text);
-                    if(toConvert.size() < 10) {
-                        toConvert = toConvert.subList(0,toConvert.size());
-                    }
-                    else {
-                        toConvert = toConvert.subList(0,10);
-                    }
+                    FoodAPI.getInstance().searchIngredient(text, c);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d("App", Arrays.toString(e.getStackTrace()));
                 }
-                autoCompleteAdapter.clear();
-                for(Ingredient i : toConvert) {
-                    autoCompleteAdapter.add(i.getName());
-                }
-                autoCompleteAdapter.notifyDataSetChanged();
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void onTextChanged(CharSequence s, int start, int before, int count){}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
 
         // Configure listeners
@@ -151,8 +171,8 @@ public class IngredientEntryActivity extends AppCompatActivity
             typeSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
             dummy.setOnClickListener(this);
-        } catch(Exception e) {
-            System.err.println(e.toString());
+        } catch (Exception e) {
+            Log.d("Aoo", Arrays.toString(e.getStackTrace()));
         }
 
         // Configure the cuisine spinner
@@ -160,65 +180,47 @@ public class IngredientEntryActivity extends AppCompatActivity
         dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
         intoleranceSpinner.setItems(getResources().getStringArray(R.array.allergy_array), this);
         typeSpinner.setItems(getResources().getStringArray(R.array.type), this);
-        // Configure the google API client
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
-
-//        ActionBar actionBar = getActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowCustomEnabled(true);
-//
-//        LayoutInflater inflator = (LayoutInflater) this
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflator.inflate(R.layout.actionbar, null);
-//        actionBar.setCustomView(v);
-//        ArrayList<String> COUNTRIES = new ArrayList<String>();
-//        COUNTRIES.add("USA");
-//        COUNTRIES.add("England");
-//
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-//        AutoCompleteTextView textView = (AutoCompleteTextView) v
-//                .findViewById(R.id.ingredientEntryBox);
-//        textView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        CharSequence selectedCuisine = (CharSequence)parent.getItemAtPosition(pos);
-
     }
 
     @Override
     public void onItemsSelected(View v, boolean[] selected) {
-        for(int k = 0; k < selected.length; k++) {
-
+        for (int k = 0; k < selected.length; k++) {
             switch (v.getId()) {
                 case R.id.cuisineSpinner:
-                    if (selected[k]) { selectedCuisines.add(cuisineSpinner.getItems()[k]); }
+                    if (selected[k]) {
+                        selectedCuisines.add(cuisineSpinner.getItems()[k]);
+                    }
                     break;
                 case R.id.dietSpinner:
-                    if(selected[k]) { selectedDiets.add(dietSpinner.getItems()[k]); }
+                    if (selected[k]) {
+                        selectedDiets.add(dietSpinner.getItems()[k]);
+                    }
                     break;
                 case R.id.intoleranceSpinner:
-                    if(selected[k]) { selectedIntolerances.add(intoleranceSpinner.getItems()[k]);}
+                    if (selected[k]) {
+                        selectedIntolerances.add(intoleranceSpinner.getItems()[k]);
+                    }
                     break;
                 case R.id.typeSpinner:
-                    if(selected[k]) {selectedType.add(typeSpinner.getItems()[k]);}
+                    if (selected[k]) {
+                        selectedType.add(typeSpinner.getItems()[k]);
+                    }
             }
         }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
 
-    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.searchButton:
                 // Don't start the next activity until the user enters ingredients
-                if(selectedIngredients.isEmpty()) {
+                if (selectedIngredients.isEmpty()) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                     builder1.setMessage("Enter at least one ingredient");
                     builder1.setCancelable(true);
@@ -235,11 +237,10 @@ public class IngredientEntryActivity extends AppCompatActivity
                     break;
                 }
 
-                ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-                for(CharSequence i : selectedIngredients) {
-                    String ingredientName = ((String)i);
-                    ingredientName = ingredientName.substring(0,ingredientName.length() -2 );
-                    Ingredient myIngredient = new Ingredient((String)i);
+                ArrayList<Ingredient> ingredients = new ArrayList<>();
+                for (CharSequence i : selectedIngredients) {
+                    String ingredientName = ((String) i).substring(0, i.length() - 2);
+                    Ingredient myIngredient = new Ingredient(ingredientName);
                     myIngredient.setAisle("Hello");
                     myIngredient.setAmount(0.0);
                     myIngredient.setImage("Hello");
@@ -259,12 +260,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 break;
 
             case R.id.addButton:
-                addIngredientToGrid(ingredientEntryBox.getText().toString() + " x");
-                break;
-
-            case R.id.signOutButton:
-                signOut();
-                startActivity(new Intent(this, HomeScreenActivity.class));
+                addIngredientToGrid(ingredientEntryBox.getText().toString() + "  x");
                 break;
 
             // DUMMY BUTTON FOR TRANSITIONING TO QUERYENTRYACTIVITY
@@ -275,19 +271,9 @@ public class IngredientEntryActivity extends AppCompatActivity
         }
     }
 
-    public void signOut() {Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-            new ResultCallback<Status>() {
-                @Override
-                public void onResult(Status status) {
-
-                }
-            });
-
-    }
-
     public void addIngredientToGrid(CharSequence ingredient) {
         // Make sure "ingredient" has not already been entered
-        if(!selectedIngredients.contains(ingredient) && !ingredient.equals(" x")) {
+        if (!selectedIngredients.contains(ingredient) && !ingredient.equals("  x")) {
             // Add "ingredient" to the list
             selectedIngredients.add(ingredient);
             updateGrid();
@@ -309,5 +295,4 @@ public class IngredientEntryActivity extends AppCompatActivity
         // Clear the ingredient entry field
         ingredientEntryBox.setText("");
     }
-
 }
