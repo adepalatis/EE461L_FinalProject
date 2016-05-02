@@ -6,14 +6,18 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 public class FoodAPI {
 
@@ -30,7 +34,7 @@ public class FoodAPI {
         return api;
     }
 
-    public List<Ingredient> searchIngredient(String query) throws IOException{
+    public void searchIngredient(String query, Callback c) throws IOException{
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/" +
                 "ingredients/autocomplete?";
 
@@ -39,11 +43,13 @@ public class FoodAPI {
                 .header("X-Mashape-Key", "splYpiM6ukmshBq11FF1vCWMOxcQp1kD1ssjsnNa56Dn5KkgfA")
                 .build();
 
-        Response res = client.newCall(req).execute();
-        if (!res.isSuccessful()) throw new IOException("Error: " + res);
+        client.newCall(req).enqueue(c);
+    }
 
-        Ingredient[] i = gson.fromJson(res.body().charStream(), Ingredient[].class);
-        return Arrays.asList(i);
+    public List<Ingredient> parseIngredientJson(Response res) throws IOException {
+        String json = res.body().string();
+        Type ingredient = new TypeToken<List<Ingredient>>(){}.getType();
+        return gson.fromJson(json, ingredient);
     }
 
     public List<RecipeSearchResult> searchRecipes(boolean ingredientLists, List<Ingredient> ingredients,
