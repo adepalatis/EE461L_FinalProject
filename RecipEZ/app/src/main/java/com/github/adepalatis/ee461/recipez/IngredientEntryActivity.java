@@ -224,21 +224,19 @@ public class IngredientEntryActivity extends AppCompatActivity
             case R.id.searchButton:
                 // Don't start the next activity until the user enters ingredients
                 if(selectedIngredients.isEmpty()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-                    builder.setPositiveButton("OK",
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                    builder1.setMessage("Enter at least one ingredient");
+                    builder1.setCancelable(true);
+                    builder1.setNeutralButton(
+                            "Okay",
                             new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             });
-                    builder.create();
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
 
-                    Dialog noIngredientsDialog = new Dialog(this);
-                    noIngredientsDialog.setContentView(R.layout.no_ingredients_popup);
-                    TextView txt = (TextView)noIngredientsDialog.findViewById(R.id.no_ingredient_popup);
-                    txt.setText(getString(R.string.no_ingredients_message));
-                    noIngredientsDialog.show();
                     break;
                 }
 
