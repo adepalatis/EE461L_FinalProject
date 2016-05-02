@@ -3,4 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".GoogleLoginActivity">
     <item android:id="@+id/nutrition_info" android:title="Nutritional Information"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/show_recipe" android:title="Show Recipe"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

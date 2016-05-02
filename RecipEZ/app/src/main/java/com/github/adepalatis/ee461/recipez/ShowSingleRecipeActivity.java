@@ -40,6 +40,8 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             case R.id.nutrition_info:
                 int a = 1;
                 return true;
+            case R.id.show_recipe:
+                return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
