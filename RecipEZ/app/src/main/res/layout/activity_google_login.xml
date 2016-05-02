@@ -32,8 +32,10 @@
             android:text="Start!"
             android:id="@+id/startButton"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="89dp" />
+            android:layout_marginBottom="89dp"
+            android:layout_alignStart="@+id/textView5"
+            android:layout_alignEnd="@+id/textView5"
+            />
 
     </RelativeLayout>
 

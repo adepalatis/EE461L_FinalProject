@@ -242,6 +242,8 @@ public class IngredientEntryActivity extends AppCompatActivity
 
                 ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
                 for(CharSequence i : selectedIngredients) {
+                    String ingredientName = ((String)i);
+                    ingredientName = ingredientName.substring(0,ingredientName.length() -2 );
                     Ingredient myIngredient = new Ingredient((String)i);
                     myIngredient.setAisle("Hello");
                     myIngredient.setAmount(0.0);
@@ -265,7 +267,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 break;
 
             case R.id.addButton:
-                addIngredientToGrid(ingredientEntryBox.getText().toString());
+                addIngredientToGrid(ingredientEntryBox.getText().toString() + " x");
                 break;
 
             case R.id.signOutButton:

@@ -2,6 +2,7 @@ package com.github.adepalatis.ee461.recipez;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -37,7 +39,10 @@ public class GoogleLoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_google_login);
         // Button listeners
         try {
-            findViewById(R.id.startButton).setOnClickListener(this);
+            Button b = (Button)findViewById(R.id.startButton);
+            b.setOnClickListener(this);
+            b.setBackgroundColor(Color.WHITE);
+
         } catch(Exception e){
             System.err.println(e.toString());
         }
