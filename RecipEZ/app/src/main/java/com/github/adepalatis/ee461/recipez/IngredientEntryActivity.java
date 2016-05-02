@@ -287,7 +287,7 @@ public class IngredientEntryActivity extends AppCompatActivity
 
     public void addIngredientToGrid(CharSequence ingredient) {
         // Make sure "ingredient" has not already been entered
-        if(!selectedIngredients.contains(ingredient) && !ingredient.equals("x")) {
+        if(!selectedIngredients.contains(ingredient) && !ingredient.equals(" x")) {
             // Add "ingredient" to the list
             selectedIngredients.add(ingredient);
             updateGrid();
