@@ -37,7 +37,7 @@ public class GoogleLoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_google_login);
         // Button listeners
         try {
-            findViewById(R.id.sign_in_button).setOnClickListener(this);
+            findViewById(R.id.startButton).setOnClickListener(this);
         } catch(Exception e){
             System.err.println(e.toString());
         }
@@ -50,10 +50,6 @@ public class GoogleLoginActivity extends AppCompatActivity implements
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
     }
 
     @Override
@@ -130,9 +126,8 @@ public class GoogleLoginActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                //startActivity(new Intent(this, IngredientEntryActivity.class));
+            case R.id.startButton:
+                startActivity(new Intent(this, IngredientEntryActivity.class));
                 break;
         }
     }
@@ -160,12 +155,12 @@ public class GoogleLoginActivity extends AppCompatActivity implements
 
     private void updateUI(boolean signedIn) {
         if (signedIn) {
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+            findViewById(R.id.startButton).setVisibility(View.GONE);
 
             Intent nextActivity = new Intent(this, IngredientEntryActivity.class);
             startActivity(nextActivity);
         } else {
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.startButton).setVisibility(View.VISIBLE);
         }
     }
 
