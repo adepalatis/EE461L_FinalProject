@@ -227,8 +227,8 @@ public class IngredientEntryActivity extends AppCompatActivity
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                     builder1.setMessage("Enter at least one ingredient");
                     builder1.setCancelable(true);
-                    builder1.setNeutralButton(
-                            "Okay",
+                    builder1.setPositiveButton(
+                            "Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
