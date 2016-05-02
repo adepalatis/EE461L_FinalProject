@@ -74,7 +74,7 @@
         android:layout_below="@id/servings"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:text="@string/servings"
+        android:text="@string/readyIn"
         android:textSize="18sp" />
 
     <TextView
@@ -82,29 +82,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/readyIn"
+        android:layout_below="@+id/numServings"
         android:layout_marginEnd="15dp"
-        android:text="@string/placeholder"
         android:textSize="18sp" />
 
-    <ExpandableListView
+    <TextView
+        android:id="@+id/missingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/readyIn"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/missing"
+        android:textStyle="bold"
+        android:textColor="@color/nephritis"
+        android:textSize="20sp" />
+
+    <ListView
         android:id="@+id/missingIngredientsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/readyIn"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/missingTV"
         android:layout_margin="15dp"
         android:groupIndicator="@null">
 
-    </ExpandableListView>
+    </ListView>
 
-    <ExpandableListView
+    <TextView
+        android:id="@+id/usedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/missingIngredientsList"
+        android:layout_marginStart="15dp"
+        android:text="@string/used"
+        android:textStyle="bold"
+        android:textColor="@color/nephritis"
+        android:textSize="20sp" />
+
+    <ListView
         android:id="@+id/usedIngredientsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/readyIn"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usedTV"
         android:layout_margin="15dp"
         android:groupIndicator="@null">
 
-    </ExpandableListView>
+    </ListView>
 
 </RelativeLayout>
