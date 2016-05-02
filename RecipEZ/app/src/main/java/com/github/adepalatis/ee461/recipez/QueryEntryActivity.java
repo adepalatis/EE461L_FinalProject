@@ -76,7 +76,7 @@ public class QueryEntryActivity extends AppCompatActivity
         // Don't start the next activity until the user enters ingredients
         if(queryEntryBox.getText().toString().equals("")) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-            builder1.setMessage("Enter at least one ingredient");
+            builder1.setMessage("Please enter a search query.");
             builder1.setCancelable(true);
             builder1.setPositiveButton(
                     "Ok",
