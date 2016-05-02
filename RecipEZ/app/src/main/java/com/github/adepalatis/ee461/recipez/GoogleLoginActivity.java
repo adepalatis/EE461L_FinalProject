@@ -132,7 +132,7 @@ public class GoogleLoginActivity extends AppCompatActivity implements
         switch (v.getId()) {
             case R.id.sign_in_button:
                 signIn();
-                startActivity(new Intent(this, IngredientEntryActivity.class));
+                //startActivity(new Intent(this, IngredientEntryActivity.class));
                 break;
         }
     }

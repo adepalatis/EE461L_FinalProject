@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     ImageView recipeImage;
     TextView recipeTitle, servings, readyIn;
     ExpandableListView missing, used;
+    List<String> groups;
+    List<List<String>> ingredients;
+
     //used for back button
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
@@ -39,6 +44,8 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_single_recipe);
 
+        setGroups();
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,8 +61,10 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             List<Ingredient> missingIngredients = data.getParcelableArrayList("missingIngredients");
             List<Ingredient> usedIngredients = data.getParcelableArrayList("usedIngredients");
 
-            recipeImage = (ImageView) findViewById(R.id.recipeImage);
-            recipeTitle = (TextView) findViewById(R.id.recipeTitle);
+            setIngredients(missingIngredients, usedIngredients);
+
+            recipeImage = (ImageView) findViewById(R.id.recipeViewImage);
+            recipeTitle = (TextView) findViewById(R.id.recipeViewTitle);
             servings = (TextView) findViewById(R.id.numServings);
             readyIn = (TextView) findViewById(R.id.minutes);
             missing = (ExpandableListView) findViewById(R.id.missingIngredientsList);
@@ -73,9 +82,39 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                 servings.setText(r.servings.toString());
                 readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
+                ExpandableListView elv = (ExpandableListView) findViewById(R.id.missingIngredientsList);
+                elv.setDividerHeight(2);
+                elv.setGroupIndicator(null);
+                elv.setClickable(false);
+
+                IngredientsExpandableListViewAdapter adapter = new IngredientsExpandableListViewAdapter(this, ingredients, groups);
+                elv.setAdapter(adapter);
             } catch (Exception e) {
                 Log.d("Error", e.toString());
             }
         }
+    }
+
+    private void setGroups() {
+        groups = new ArrayList<String>(){{
+            add("Ingredients Missing");
+            add("Ingredients On Hand");
+        }};
+    }
+
+    private void setIngredients(List<Ingredient> missing, List<Ingredient> used) {
+        ArrayList<String> m = new ArrayList<>();
+        for (Ingredient i: missing) {
+            m.add(i.getName());
+        }
+
+        ArrayList<String> u = new ArrayList<>();
+        for (Ingredient i: used) {
+            u.add(i.getName());
+        }
+
+        ingredients = new ArrayList<>();
+        ingredients.add(m);
+        ingredients.add(u);
     }
 }

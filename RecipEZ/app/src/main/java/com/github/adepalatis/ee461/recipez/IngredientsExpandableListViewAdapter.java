@@ -2,11 +2,14 @@ package com.github.adepalatis.ee461.recipez;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,24 +67,56 @@ public class IngredientsExpandableListViewAdapter extends BaseExpandableListAdap
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        return null;
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = newGroupView();
+        }
+
+        CheckedTextView t = (CheckedTextView) convertView.getTag();
+        t.setText(groups.get(groupPosition));
+        t.setChecked(isExpanded);
+
+        return convertView;
+    }
+
+    private View newGroupView() {
+        View v = l.inflate(R.layout.ingredient_group, null);
+        CheckedTextView t = (CheckedTextView) v.findViewById(R.id.ingredientGroup);
+        v.setTag(t);
+        return v;
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         elements = ingredients.get(groupPosition);
 
         if (convertView == null) {
             convertView = newChildView();
         }
-        return null;
+
+        TextView t = (TextView) convertView.getTag();
+        t.setText(elements.get(childPosition));
+
+        final int gp = groupPosition;
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ELV", "clicked: " + groups.get(gp));
+                Toast.makeText(a, ingredients.get(gp).get(childPosition), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return convertView;
     }
 
     private View newChildView() {
-        View v = l.inflate(R.layout.ingredient_group, null);
-        return null;
+        View v = l.inflate(R.layout.ingredient_group_element, null);
+        TextView t = (TextView) v.findViewById(R.id.ingredient);
+        v.setTag(t);
+        return v;
     }
 
     @Override
