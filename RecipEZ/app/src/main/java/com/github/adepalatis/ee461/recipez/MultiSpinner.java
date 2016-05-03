@@ -128,7 +128,7 @@ public class MultiSpinner extends Spinner implements
 
     @Override
     public boolean performClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
         builder.setTitle("Select Items");
         builder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {

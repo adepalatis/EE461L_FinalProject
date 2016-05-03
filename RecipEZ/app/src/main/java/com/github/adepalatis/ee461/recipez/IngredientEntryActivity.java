@@ -179,7 +179,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             case R.id.searchButton:
                 // Don't start the next activity until the user enters ingredients
                 if (selectedIngredients.isEmpty()) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog_Alert);
                     builder1.setMessage("Add at least one ingredient to your pantry");
                     builder1.setCancelable(true);
                     builder1.setPositiveButton(

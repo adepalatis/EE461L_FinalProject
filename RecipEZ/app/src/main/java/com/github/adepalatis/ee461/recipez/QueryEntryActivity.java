@@ -88,7 +88,7 @@ public class QueryEntryActivity extends AppCompatActivity
     public void onClick(View v) {
         // Don't start the next activity until the user enters a query
         if(queryEntryBox.getText().toString().equals("")) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog_Alert);
             builder1.setMessage("Please enter a search query.");
             builder1.setCancelable(true);
             builder1.setPositiveButton(
