@@ -42,7 +42,6 @@ public class FoodAPI {
                 .build();
 
         client.newCall(req).enqueue(c);
-        Log.d("App", "Called HTTP GET on url: " + urlWithParams);
     }
 
     public void searchIngredient(String query, Callback c) throws IOException{
@@ -138,8 +137,8 @@ public class FoodAPI {
             RecipeSearchResultWrapper wrapper = gson.fromJson(json, t);
             return wrapper.getRecipes();
         } else {
-            Type t = new TypeToken<List<RecipeSearchResult>>(){}.getType();
-            return gson.fromJson(json, t);
+            Type t = new TypeToken<RecipeSearchResult[]>(){}.getType();
+            return Arrays.asList((RecipeSearchResult[]) gson.fromJson(json, t));
         }
     }
 

@@ -158,7 +158,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 // Don't start the next activity until the user enters ingredients
                 if (selectedIngredients.isEmpty()) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-                    builder1.setMessage("Enter at least one ingredient");
+                    builder1.setMessage("Add at least one ingredient to your pantry");
                     builder1.setCancelable(true);
                     builder1.setPositiveButton(
                             "Ok",
@@ -169,7 +169,6 @@ public class IngredientEntryActivity extends AppCompatActivity
                             });
                     AlertDialog alert11 = builder1.create();
                     alert11.show();
-
                     break;
                 }
 
@@ -180,6 +179,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                 }
                 RecipeSearchParameters rsp = new RecipeSearchParameters(ingredients, 1);
                 rsp.setMaxNumber(30);
+                rsp.setIngredientLists(true);
 
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", rsp);
@@ -192,7 +192,6 @@ public class IngredientEntryActivity extends AppCompatActivity
 
             // DUMMY BUTTON FOR TRANSITIONING TO QUERYENTRYACTIVITY
             case R.id.button:
-                Log.d("button", "button clicked");
                 startActivity(new Intent(this, QueryEntryActivity.class));
                 break;
         }

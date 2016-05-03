@@ -107,17 +107,11 @@ public class ShowRecipesActivity extends AppCompatActivity {
     public void transitionToNext(RecipeSearchResult r) {
         Intent i = new Intent(this, ShowSingleRecipeActivity.class);
         i.putExtra("recipeId", r.id);
-        try {
+        if (r.missedIngredients != null) {
             i.putParcelableArrayListExtra("missingIngredients", new ArrayList<>(Arrays.asList(r.missedIngredients)));
-        } catch(NullPointerException e) {
-            ArrayList<Ingredient> test = new ArrayList<>();
-            i.putParcelableArrayListExtra("missingIngredients", test);
         }
-        try {
+        if (r.usedIngredients != null) {
             i.putParcelableArrayListExtra("usedIngredients", new ArrayList<>(Arrays.asList(r.usedIngredients)));
-        } catch(NullPointerException e) {
-            ArrayList<Ingredient> test = new ArrayList<>();
-            i.putParcelableArrayListExtra("usedIngredients", test);
         }
         startActivity(i);
     }

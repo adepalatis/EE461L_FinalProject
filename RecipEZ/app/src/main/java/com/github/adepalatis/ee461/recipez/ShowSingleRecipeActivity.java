@@ -114,22 +114,23 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                                     servings.setText(r.servings.toString());
                                     readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
-                                    if(usedIngredients != null && !usedIngredients.isEmpty()) {
+                                    if (missingIngredients != null && !missingIngredients.isEmpty()) {
                                         IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
                                         m.setInflater(self);
                                         missing.setAdapter(m);
+                                        justifyListViewHeightBasedOnChildren(missing);
+                                    } else {
+                                        findViewById(R.id.missingTV).setVisibility(View.GONE);
+                                    }
 
+                                    if(usedIngredients != null && !usedIngredients.isEmpty()) {
                                         IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
                                         u.setInflater(self);
                                         used.setAdapter(u);
+                                        justifyListViewHeightBasedOnChildren(used);
                                     } else {
-                                        Log.d("App", "Hide ingredient lists");
-                                        findViewById(R.id.missingTV).setVisibility(View.GONE);
                                         findViewById(R.id.usedTV).setVisibility(View.GONE);
                                     }
-
-                                    justifyListViewHeightBasedOnChildren(missing);
-                                    justifyListViewHeightBasedOnChildren(used);
                                 } catch (Exception e) {
                                     Log.d("App", Arrays.toString(e.getStackTrace()));
                                 }
@@ -184,10 +185,8 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     private void init(Dialog d) {
         List<Nutrient> nutrition = Arrays.asList(r.nutrition.nutrients);
         table = (TableLayout) d.findViewById(R.id.nutrientTable);
-        Log.d("table", Integer.toString(nutrition.size()));
 
         for (Nutrient n: nutrition) {
-            Log.d("table", n.title);
             TableRow row = new TableRow(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(params);
