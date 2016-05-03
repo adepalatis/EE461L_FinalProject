@@ -41,7 +41,7 @@
             android:layout_above="@+id/relativeLayout"
             android:layout_centerHorizontal="true" />
 
-        GridView
+        <GridView
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:id="@+id/selectedIngredientsGrid"
