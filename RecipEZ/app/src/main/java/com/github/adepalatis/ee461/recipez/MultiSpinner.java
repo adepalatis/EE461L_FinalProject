@@ -137,12 +137,12 @@ public class MultiSpinner extends Spinner implements
                         dialog.cancel();
                     }
                 });
-        if(items[1].equals("Main course")) { //used for dish type. Creates a dialog with only one option to select
-            builder.setItems(items,this);
-        }
-        else { //creata a multiple choice dialog
+        //if(items[1].equals("Main course")) { //used for dish type. Creates a dialog with only one option to select
+        //    builder.setItems(items,this);
+        //}
+        //else { //creata a multiple choice dialog
             builder.setMultiChoiceItems(items, selected, this);
-        }
+        //}
 
         builder.setOnCancelListener(this);
         builder.show();

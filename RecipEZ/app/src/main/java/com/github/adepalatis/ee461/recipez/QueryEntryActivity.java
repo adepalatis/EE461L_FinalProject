@@ -51,7 +51,7 @@ public class QueryEntryActivity extends AppCompatActivity
         typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
         selectedCuisines = new ArrayList<String>();
         selectedDiets = new ArrayList<String>();
-        selectedType = null;
+        selectedType = "";
         selectedIntolerances = new ArrayList<String>();
 
         queryEntryBox = (EditText)findViewById(R.id.queryEntryBox);

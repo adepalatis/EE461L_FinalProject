@@ -181,7 +181,10 @@ public class RecipeSearchParameters implements Parcelable {
         for (Ingredient i: ingredients) {
             list += i.getName() + ",";
         }
-        return list.substring(0, list.length()-1); // Remove last comma
+        if(list.equals(""))
+            return "";
+        else
+            return list.substring(0, list.length()-1); // Remove last comma
     }
 
     private String convertStringsToString(List<String> strings) {
@@ -189,6 +192,9 @@ public class RecipeSearchParameters implements Parcelable {
         for (String s: strings) {
             result += s + ",";
         }
-        return result.substring(0, result.length()-1);
+        if(result.equals(""))
+            return "";
+        else
+            return result.substring(0, result.length()-1);
     }
 }
