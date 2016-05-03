@@ -111,11 +111,6 @@ public class IngredientEntryActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         toConvert = FoodAPI.getInstance().parseIngredientJson(response);
-                        if (toConvert.size() < 10) {
-                            toConvert = toConvert.subList(0, toConvert.size());
-                        } else {
-                            toConvert = toConvert.subList(0, 10);
-                        }
 
                         IngredientEntryActivity.this.runOnUiThread(new Runnable() {
                             @Override
@@ -180,23 +175,14 @@ public class IngredientEntryActivity extends AppCompatActivity
 
                 ArrayList<Ingredient> ingredients = new ArrayList<>();
                 for (CharSequence i : selectedIngredients) {
-                    String ingredientName = ((String) i).substring(0, i.length() - 2);
-                    Ingredient myIngredient = new Ingredient(ingredientName);
-                    myIngredient.setAisle("Hello");
-                    myIngredient.setAmount(0.0);
-                    myIngredient.setImage("Hello");
-                    myIngredient.setOriginalString("Hello");
-                    myIngredient.setUnit("Hello");
-                    ingredients.add(myIngredient);
+                    String name = ((String) i).substring(0, i.length() - 3);
+                    ingredients.add(new Ingredient(name));
                 }
-                RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
-                RSP.setCuisine(new ArrayList<String>());
-                RSP.setDiet(new ArrayList<String>());
-                RSP.setType("");
-                RSP.setIntolerance(new ArrayList<String>());
-                RSP.setExcludeIngredients(new ArrayList<Ingredient>());
+                RecipeSearchParameters rsp = new RecipeSearchParameters(ingredients, 1);
+                rsp.setMaxNumber(30);
+
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
-                nextActivity.putExtra("RSP", RSP);
+                nextActivity.putExtra("RSP", rsp);
                 startActivity(nextActivity);
                 break;
 

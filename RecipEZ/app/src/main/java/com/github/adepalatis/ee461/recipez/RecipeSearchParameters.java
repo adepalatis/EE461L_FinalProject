@@ -3,153 +3,149 @@ package com.github.adepalatis.ee461.recipez;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by michael on 4/24/16.
  */
 public class RecipeSearchParameters implements Parcelable {
-    private boolean ingredientLists = true; // Show used and missing ingredients in results
-    private boolean limitLicense = true; // show with proper attribution
-    private int maxNumber = 10; // Max number of results
-    private int offset = 0; // Number of results to skip
-    private int ranking = 1; // 1 = maximize used ingredients, 2 = minimize missing ingredients
-    private String query = ""; // Recipe search query
-    private String type = ""; // The type of the recipe, i.e main course
-    private List<Ingredient> ingredients = new ArrayList<>();
-    private List<Ingredient> excludeIngredients = new ArrayList<>();
-    private List<String> cuisine = new ArrayList<>();
-    private List<String> diet = new ArrayList<>();
-    private List<String> intolerance = new ArrayList<>();
 
-    public boolean isIngredientLists() {
-        return ingredientLists;
+    private static String LIST = "lists";
+    private static String LICENSE = "limit";
+    private static String MAX = "max";
+    private static String OFFSET = "off";
+    private static String RANK = "rank";
+    private static String QUERY = "query";
+    private static String TYPE = "type";
+    private static String INGREDIENTS = "ingredients";
+    private static String EXCLUDE = "exclude";
+    private static String CUISINE = "cuisine";
+    private static String DIET = "diet";
+    private static String INTOLERANCE = "intolerance";
+
+    private Map<String, String> params;
+
+    public void setIngredientLists(Boolean is) {
+        params.put(LIST, is.toString());
     }
 
-    public void setIngredientLists(boolean ingredientLists) {
-        this.ingredientLists = ingredientLists;
+    public String getIngredientLists() {
+        return params.get(LIST);
     }
 
-    public boolean isLimitLicense() {
-        return limitLicense;
+    public void setLimitLicense(Boolean is) {
+        params.put(LICENSE, is.toString());
     }
 
-    public void setLimitLicense(boolean limitLicense) {
-        this.limitLicense = limitLicense;
+    public String getLimitLicense() {
+        return params.get(LICENSE);
     }
 
-    public int getMaxNumber() {
-        return maxNumber;
+    public void setMaxNumber(Integer num) {
+        params.put(MAX, num.toString());
     }
 
-    public void setMaxNumber(int maxNumber) {
-        this.maxNumber = maxNumber;
+    public String getMaxNumber() {
+        return params.get(MAX);
     }
 
-    public int getOffset() {
-        return offset;
+    public void setOffset(Integer num) {
+        params.put(OFFSET, num.toString());
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public String getOffset() {
+        return params.get(OFFSET);
     }
 
-    public int getRanking() {
-        return ranking;
+    public void setRanking(Integer num) {
+        params.put(RANK, num.toString());
     }
 
-    public void setRanking(int ranking) {
-        this.ranking = ranking;
-    }
-
-    public String getQuery() {
-        return query;
+    public String getRanking() {
+        return params.get(RANK);
     }
 
     public void setQuery(String query) {
-        this.query = query;
+        params.put(QUERY, query);
     }
 
-    public String getType() {
-        return type;
+    public String getQuery() {
+        return params.get(QUERY);
     }
 
     public void setType(String type) {
-        this.type = type;
+        params.put(TYPE, type);
     }
 
-    public void setType(ArrayList<String> type) {
-        if(type!=null && !type.isEmpty())
-        {
-            this.type = type.get(0);
-        }
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public String getType() {
+        return params.get(TYPE);
     }
 
     public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+        params.put(INGREDIENTS, convertToString(ingredients));
     }
 
-    public List<Ingredient> getExcludeIngredients() {
-        return excludeIngredients;
+    public String getIngredients() {
+        return params.get(INGREDIENTS);
     }
 
     public void setExcludeIngredients(List<Ingredient> excludeIngredients) {
-        this.excludeIngredients = excludeIngredients;
+        params.put(EXCLUDE, convertToString(excludeIngredients));
     }
 
-    public List<String> getCuisine() {
-        return cuisine;
+    public String getExcludeIngredients() {
+        return params.get(EXCLUDE);
     }
 
     public void setCuisine(List<String> cuisine) {
-        this.cuisine = cuisine;
+        params.put(CUISINE, convertStringsToString(cuisine));
     }
 
-    public List<String> getDiet() {
-        return diet;
+    public String getCuisine() {
+        return params.get(CUISINE);
     }
 
     public void setDiet(List<String> diet) {
-        this.diet = diet;
+        params.put(DIET, convertStringsToString(diet));
     }
 
-    public List<String> getIntolerance() {
-        return intolerance;
+    public String getDiet() {
+        return params.get(DIET);
     }
 
     public void setIntolerance(List<String> intolerance) {
-        this.intolerance = intolerance;
+        params.put(INTOLERANCE, convertStringsToString(intolerance));
+    }
+
+    public String getIntolerance() {
+        return params.get(INTOLERANCE);
+    }
+
+    private RecipeSearchParameters() {
+        params = new HashMap<>();
     }
 
     public RecipeSearchParameters(String query) {
-        this.query = query;
+        this();
+        setQuery(query);
     }
 
-    public RecipeSearchParameters(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public RecipeSearchParameters(List<Ingredient> ingredients, Integer ranking) {
+        this();
+        setIngredients(ingredients);
+        setRanking(ranking);
     }
 
     public RecipeSearchParameters(Parcel p) {
-        ingredientLists = (boolean) p.readValue(null);
-        limitLicense = (boolean) p.readValue(null);
-        maxNumber = p.readInt();
-        offset = p.readInt();
-        ranking = p.readInt();
-        query = p.readString();
-        type = p.readString();
-
-        ingredients = Arrays.asList(p.createTypedArray(Ingredient.CREATOR));
-        excludeIngredients = Arrays.asList(p.createTypedArray(Ingredient.CREATOR));
-
-        p.readList(cuisine, List.class.getClassLoader());
-        p.readList(diet, List.class.getClassLoader());
-        p.readList(intolerance, List.class.getClassLoader());
+        this();
+        int paramSize = p.readInt();
+        for (int i = 0; i < paramSize; i++) {
+            String key = p.readString();
+            String val = p.readString();
+            params.put(key, val);
+        }
     }
 
     @Override
@@ -159,21 +155,13 @@ public class RecipeSearchParameters implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(ingredientLists);
-        dest.writeValue(limitLicense);
-        dest.writeInt(maxNumber);
-        dest.writeInt(offset);
-        dest.writeInt(ranking);
-        dest.writeString(query);
-        dest.writeString(type);
+        int paramSize = params.size();
+        dest.writeInt(paramSize);
 
-        dest.writeTypedList(ingredients);
-        dest.writeTypedList(excludeIngredients);
-
-        dest.writeList(cuisine);
-        dest.writeList(diet);
-        dest.writeList(intolerance);
-//        dest.setDataPosition(0);
+        for (Map.Entry<String, String> e: params.entrySet()) {
+            dest.writeString(e.getKey());
+            dest.writeString(e.getValue());
+        }
     }
 
     public static final Parcelable.Creator<RecipeSearchParameters> CREATOR = new Parcelable.Creator<RecipeSearchParameters>() {
@@ -187,4 +175,20 @@ public class RecipeSearchParameters implements Parcelable {
             return new RecipeSearchParameters[size];
         }
     };
+
+    private String convertToString(List<Ingredient> ingredients) {
+        String list = "";
+        for (Ingredient i: ingredients) {
+            list += i.getName() + ",";
+        }
+        return list.substring(0, list.length()-1); // Remove last comma
+    }
+
+    private String convertStringsToString(List<String> strings) {
+        String result = "";
+        for (String s: strings) {
+            result += s + ",";
+        }
+        return result.substring(0, result.length()-1);
+    }
 }

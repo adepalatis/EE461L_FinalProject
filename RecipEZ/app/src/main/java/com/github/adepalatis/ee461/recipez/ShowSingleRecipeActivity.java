@@ -1,5 +1,6 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,11 +23,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class ShowSingleRecipeActivity extends AppCompatActivity {
 
@@ -35,6 +41,7 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     ListView missing, used;
     TableLayout table;
     Recipe r;
+    Activity self = this;
 
     //used for back button
     @Override
@@ -72,9 +79,9 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
 
         if (data != null) {
-            Integer recipeId = data.getInt("recipeId");
-            List<Ingredient> missingIngredients = data.getParcelableArrayList("missingIngredients");
-            List<Ingredient> usedIngredients = data.getParcelableArrayList("usedIngredients");
+            final Integer recipeId = data.getInt("recipeId");
+            final List<Ingredient> missingIngredients = data.getParcelableArrayList("missingIngredients");
+            final List<Ingredient> usedIngredients = data.getParcelableArrayList("usedIngredients");
 
             recipeImage = (ImageView) findViewById(R.id.recipeViewImage);
             recipeTitle = (TextView) findViewById(R.id.recipeViewTitle);
@@ -84,40 +91,44 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
             used = (ListView) findViewById(R.id.usedIngredientsList);
 
             try {
-                r = FoodAPI.getInstance().getRecipe(recipeId, true);
+                Callback c = new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.d("App", Arrays.toString(e.getStackTrace()));
+                    }
 
-                String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
-                InputStream is = (InputStream) new URL(url).getContent();
-                Drawable d = Drawable.createFromStream(is, r.title);
-                recipeImage.setImageDrawable(d);
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        r = FoodAPI.getInstance().parseRecipeJson(response);
 
-                recipeTitle.setText(r.title);
-                servings.setText(r.servings.toString());
-                readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
+                        String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
+                        InputStream is = (InputStream) new URL(url).getContent();
+                        Drawable d = Drawable.createFromStream(is, r.title);
+                        recipeImage.setImageDrawable(d);
 
-                if(usedIngredients != null && !usedIngredients.isEmpty()) {
-                    IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
-                    m.setInflater(this);
-                    missing.setAdapter(m);
+                        recipeTitle.setText(r.title);
+                        servings.setText(r.servings.toString());
+                        readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
-                    IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
-                    u.setInflater(this);
-                    used.setAdapter(u);
-                } else {
-                    ((TextView)findViewById(R.id.missingTV)).setVisibility(View.GONE);
-                    ((TextView)findViewById(R.id.usedTV)).setVisibility(View.GONE);
-                }
+                        if(usedIngredients != null && !usedIngredients.isEmpty()) {
+                            IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
+                            m.setInflater(self);
+                            missing.setAdapter(m);
 
+                            IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
+                            u.setInflater(self);
+                            used.setAdapter(u);
+                        } else {
+                            findViewById(R.id.missingTV).setVisibility(View.GONE);
+                            findViewById(R.id.usedTV).setVisibility(View.GONE);
+                        }
 
+                        justifyListViewHeightBasedOnChildren(missing);
+                        justifyListViewHeightBasedOnChildren(used);
+                    }
+                };
 
-
-                justifyListViewHeightBasedOnChildren(missing);
-                justifyListViewHeightBasedOnChildren(used);
-
-//                missing.setEnabled(false);
-//                missing.setOnClickListener(null);
-//                used.setEnabled(false);
-//                used.setOnClickListener(null);
+                FoodAPI.getInstance().getRecipe(recipeId, true, c);
             } catch (Exception e) {
                 Log.d("Error", e.toString());
             }

@@ -34,126 +34,116 @@ public class FoodAPI {
         return api;
     }
 
-    public void searchIngredient(String query, Callback c) throws IOException{
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/" +
-                "ingredients/autocomplete?";
-
+    public void httpGetRequest(String urlWithParams, Callback c) {
         Request req = new Request.Builder()
-                .url(url + "query=" + query)
-                .header("X-Mashape-Key", "splYpiM6ukmshBq11FF1vCWMOxcQp1kD1ssjsnNa56Dn5KkgfA")
-                .build();
-
-        client.newCall(req).enqueue(c);
-    }
-
-    public List<Ingredient> parseIngredientJson(Response res) throws IOException {
-        String json = res.body().string();
-        Type ingredient = new TypeToken<List<Ingredient>>(){}.getType();
-        return gson.fromJson(json, ingredient);
-    }
-
-    public List<RecipeSearchResult> searchRecipes(boolean ingredientLists, List<Ingredient> ingredients,
-                                                  boolean limitLicense, int maxNumber, int ranking) throws Exception {
-
-        if (!checkArguments(ingredients, ranking)) {
-            throw new IllegalArgumentException();
-        }
-
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" +
-                "findByIngredients?";
-
-        String igList = "";
-        for (Ingredient i: ingredients) {
-            igList += i.getName() + ",";
-        }
-        igList = igList.substring(0, igList.length()-1); // Remove last comma
-
-        Request req = new Request.Builder()
-                .url(url + "fillIngredients=" + ingredientLists + "&ingredients=" + igList +
-                "&limitLicense=" + limitLicense + "&number=" + maxNumber + "&ranking=" + ranking)
+                .url(urlWithParams)
                 .header("X-Mashape-Key", "splYpiM6ukmshBq11FF1vCWMOxcQp1kD1ssjsnNa56Dn5KkgfA")
                 .header("Accept", "application/json")
                 .build();
 
-        Response res = client.newCall(req).execute();
-        if (!res.isSuccessful()) throw new IOException("Error: " + res);
-
-        RecipeSearchResult[] r = gson.fromJson(res.body().string(), RecipeSearchResult[].class);
-        return Arrays.asList(r);
+        client.newCall(req).enqueue(c);
+        Log.d("App", "Called HTTP GET on url: " + urlWithParams);
     }
 
-    public List<RecipeSearchResult> searchRecipes(List<String> cuisine, List<String> diet, List<Ingredient> exclude,
-                                                  List<String> intolerance, Boolean limitLicense, Integer maxNumber,
-                                                  Integer offset, String query, String type) throws Exception {
+    public void searchIngredient(String query, Callback c) throws IOException{
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/" +
+                "ingredients/autocomplete?query=" + query;
 
-        if (!checkArguments(cuisine, diet, intolerance, maxNumber, offset, query, type)) {
-            throw new IllegalArgumentException();
-        }
-
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?";
-        url += "query=" + query;
-
-        if (cuisine != null) {
-            url += "&cuisine=";
-            for (String s: cuisine) {
-                url += s + ",";
-            }
-            url = url.substring(0, url.length()-1);
-        }
-
-        if (diet != null) {
-            url += "&diet=";
-            for (String s: diet) {
-                url += s + ",";
-            }
-            url = url.substring(0, url.length()-1);
-        }
-
-        if (exclude != null) {
-            url += "&excludeIngredients=";
-            for (Ingredient i: exclude) {
-                url += i.getName() + ",";
-            }
-            url = url.substring(0, url.length()-1);
-        }
-
-        if (intolerance != null) {
-            url += "&intolerances=";
-            for (String s: intolerance) {
-                url += s + ",";
-            }
-            url = url.substring(0, url.length()-1);
-        }
-
-        if (limitLicense != null) {
-            url += "&limitLicense=" + limitLicense;
-        }
-
-        if (maxNumber != null) {
-            url += "&number=" + maxNumber;
-        }
-
-        if (offset != null) {
-            url += "&offset=" + offset;
-        }
-
-        if (type != null) {
-            url += "&type=" + type;
-        }
-
-        Request req = new Request.Builder()
-                .url(url)
-                .header("X-Mashape-Key", "splYpiM6ukmshBq11FF1vCWMOxcQp1kD1ssjsnNa56Dn5KkgfA")
-                .build();
-
-        Response res = client.newCall(req).execute();
-        if (!res.isSuccessful()) throw new IOException("Error: " + res);
-
-        RecipeSearchResultWrapper r = gson.fromJson(res.body().string(), RecipeSearchResultWrapper.class);
-        return r.getRecipes();
+        httpGetRequest(url, c);
     }
 
-    public Recipe getRecipe(Integer id, Boolean nutrition) throws Exception {
+    public List<Ingredient> parseIngredientJson(Response r) throws IOException {
+        String json = r.body().string();
+        Type t = new TypeToken<List<Ingredient>>(){}.getType();
+        return gson.fromJson(json, t);
+    }
+
+    public void searchRecipes(RecipeSearchParameters rsp, Callback c) throws Exception {
+        String ingredients = rsp.getIngredients();
+        String ranking = rsp.getRanking();
+        String query = rsp.getQuery();
+        String license = rsp.getLimitLicense();
+        String num = rsp.getMaxNumber();
+
+        if (ingredients != null && query != null) {
+            throw new IllegalArgumentException("Query and Ingredients cannot both be defined");
+        }
+
+        if (ingredients != null && ranking != null) {
+            String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?";
+            url += "ingredients=" + ingredients + "&ranking=" + ranking;
+
+            String fill = rsp.getIngredientLists();
+            if (fill != null) {
+                url += "&fillIngredients=" + fill;
+            }
+
+            if (license != null) {
+                url += "&limitLicense=" + license;
+            }
+
+            if (num != null) {
+                url += "&number=" + num;
+            }
+
+            httpGetRequest(url, c);
+        } else if (query != null) {
+            String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?";
+            url += "query=" + query;
+
+            String cuisine = rsp.getCuisine();
+            if (cuisine != null) {
+                url += "&cuisine=" + cuisine;
+            }
+
+            String diet = rsp.getDiet();
+            if (diet != null) {
+                url += "&diet=" + diet;
+            }
+
+            String intol = rsp.getIntolerance();
+            if (intol != null) {
+                url += "&intolerances=" + intol;
+            }
+
+            if (license != null) {
+                url += "&limiLicense=" + license;
+            }
+
+            if (num != null) {
+                url += "&number=" + num;
+            }
+
+            String offset = rsp.getOffset();
+            if (offset != null) {
+                url += "&offset=" + offset;
+            }
+
+            String type = rsp.getType();
+            if (type != null) {
+                url += "&type" + type;
+            }
+
+            httpGetRequest(url, c);
+        } else {
+            throw new IllegalArgumentException("Query cannot be null, or Ingredients and Ranking cannot both be null.");
+        }
+    }
+
+    public List<RecipeSearchResult> parseRecipeSearchResultJson(Response r, Boolean useWrapper) throws IOException {
+        String json = r.body().string();
+
+        if (useWrapper) {
+            Type t = new TypeToken<RecipeSearchResultWrapper>(){}.getType();
+            RecipeSearchResultWrapper wrapper = gson.fromJson(json, t);
+            return wrapper.getRecipes();
+        } else {
+            Type t = new TypeToken<List<RecipeSearchResult>>(){}.getType();
+            return gson.fromJson(json, t);
+        }
+    }
+
+    public void getRecipe(Integer id, Boolean nutrition, Callback c) throws Exception {
         if (id == null) {
             throw new IllegalArgumentException();
         }
@@ -165,89 +155,12 @@ public class FoodAPI {
             url += "?includeNutrition=" + nutrition.toString();
         }
 
-        Request req = new Request.Builder()
-                .url(url)
-                .header("X-Mashape-Key", "splYpiM6ukmshBq11FF1vCWMOxcQp1kD1ssjsnNa56Dn5KkgfA")
-                .build();
-
-        Response res = client.newCall(req).execute();
-        if (!res.isSuccessful()) throw new IOException("Error: " + res);
-
-        return gson.fromJson(res.body().string(), Recipe.class);
+        httpGetRequest(url, c);
     }
 
-    private boolean checkArguments(List<Ingredient> ingredients, int ranking) {
-        if (ranking > 2 || ranking < 1 || ingredients == null || ingredients.isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkArguments(List<String> cuisine, List<String> diet, List<String> intolerance,
-                                   Integer maxNumber, Integer offset, String query, String type) {
-
-        if (maxNumber != null && (maxNumber < 0 || maxNumber > 100 )) {
-            Log.d("maxNumber", "culprit");
-            return false;
-        }
-
-        if (offset != null && (offset < 0 || offset > 900)) {
-            Log.d("offset", "culprit");
-            return false;
-        }
-
-        if (query == null) {
-            Log.d("query", "culprit");
-            return false;
-        }
-
-        if (cuisine != null && !cuisine.isEmpty()) {
-            String valid = "african chinese japanese korean vietnamese thai indian british irish " +
-                    "french italian mexican spanish middle eastern jewish american cajun southern " +
-                    "greek german nordic eastern+european caribbean latin+american";
-
-            for (String s: cuisine) {
-                if (!valid.contains(s.toLowerCase())) {
-                    Log.d("cuisine", "culprit");
-                    return false;
-                }
-            }
-        }
-
-        if (diet != null && !diet.isEmpty()) {
-            String valid = "pescetarian lacto+vegetarian ovo+vegetarian vegan vegetarian";
-
-            for (String s: diet) {
-                if (!valid.contains(s.toLowerCase())) {
-                    Log.d("diet", "culprit");
-                    return false;
-                }
-            }
-        }
-
-        if (intolerance != null && !intolerance.isEmpty()) {
-            String valid = "dairy egg gluten peanut sesame seafood shellfish soy sulfite " +
-                    "tree+nut wheat";
-
-            for (String s: intolerance) {
-                if (!valid.contains(s.toLowerCase())) {
-                    Log.d("intolerance", "culprit");
-                    return false;
-                }
-            }
-        }
-
-        if (type != null) {
-            String valid = "main+course side+dish dessert appetizer salad bread breakfast soup " +
-                    "beverage sauce drink";
-
-            if (!valid.contains(type.toLowerCase())) {
-                Log.d("type", "culprit");
-                return false;
-            }
-        }
-
-        return true;
+    public Recipe parseRecipeJson(Response r) throws IOException {
+        String json = r.body().string();
+        Type t = new TypeToken<Recipe>(){}.getType();
+        return gson.fromJson(json, t);
     }
 }

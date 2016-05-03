@@ -1,5 +1,6 @@
 package com.github.adepalatis.ee461.recipez;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -17,10 +18,15 @@ import android.widget.ExpandableListView;
 import android.widget.GridLayout;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Tony on 3/27/2016.
@@ -28,6 +34,7 @@ import java.util.List;
 public class ShowRecipesActivity extends AppCompatActivity {
 
     ListView recipeList;
+    Activity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +49,44 @@ public class ShowRecipesActivity extends AppCompatActivity {
         recipeList = (ListView) findViewById(R.id.showRecipes);
         Bundle data = getIntent().getExtras();
         if (data != null) {
-            RecipeSearchParameters rsp = data.getParcelable("RSP");
-            List<RecipeSearchResult> rsr;
-            FoodAPI api = FoodAPI.getInstance();
+            final RecipeSearchParameters rsp = data.getParcelable("RSP");
+            final FoodAPI api = FoodAPI.getInstance();
 
             if (rsp != null) {
-                if (!rsp.getQuery().equals("")) { // Use query recipe search
-                    try {
-                        rsr = api.searchRecipes(rsp.getCuisine(), rsp.getDiet(),
-                                rsp.getExcludeIngredients(), rsp.getIntolerance(), rsp.isLimitLicense(),
-                                30, rsp.getOffset(), rsp.getQuery(), rsp.getType());
-                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
-                    } catch (Exception e) {
-                        Log.d("Error", e.toString());
+                Callback c = new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.d("App", Arrays.toString(e.getStackTrace()));
                     }
-                } else {
-                    try {
-                        rsr = api.searchRecipes(rsp.isIngredientLists(), rsp.getIngredients(),
-                                rsp.isLimitLicense(), 30, rsp.getRanking());
-                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(this, rsr));
-                    } catch (Exception e) {
-                        Log.d("Error", e.toString());
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String q = rsp.getQuery();
+                        final Response res = response;
+
+                        self.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (q != null) {
+                                        List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, true);
+                                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                    } else {
+                                        List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, false);
+                                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                    }
+                                } catch (IOException e) {
+                                    Log.d("App", Arrays.toString(e.getStackTrace()));
+                                }
+                            }
+                        });
                     }
+                };
+
+                try {
+                    api.searchRecipes(rsp, c);
+                } catch (Exception e) {
+                    Log.d("App", Arrays.toString(e.getStackTrace()));
                 }
             }
         }
@@ -87,13 +110,13 @@ public class ShowRecipesActivity extends AppCompatActivity {
         try {
             i.putParcelableArrayListExtra("missingIngredients", new ArrayList<>(Arrays.asList(r.missedIngredients)));
         } catch(NullPointerException e) {
-            ArrayList<Ingredient> test = new ArrayList<Ingredient>();
+            ArrayList<Ingredient> test = new ArrayList<>();
             i.putParcelableArrayListExtra("missingIngredients", test);
         }
         try {
             i.putParcelableArrayListExtra("usedIngredients", new ArrayList<>(Arrays.asList(r.usedIngredients)));
         } catch(NullPointerException e) {
-            ArrayList<Ingredient> test = new ArrayList<Ingredient>();
+            ArrayList<Ingredient> test = new ArrayList<>();
             i.putParcelableArrayListExtra("usedIngredients", test);
         }
         startActivity(i);

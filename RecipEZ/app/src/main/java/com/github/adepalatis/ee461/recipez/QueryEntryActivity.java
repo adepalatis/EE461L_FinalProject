@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,27 +33,25 @@ public class QueryEntryActivity extends AppCompatActivity
     private ArrayList<String> selectedCuisines;
     private ArrayList<String> selectedDiets;
     private ArrayList<String> selectedIntolerances;
-    private ArrayList<String> selectedType;
+    private String selectedType;
     private EditText queryEntryBox;
-    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_entry);
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setTitleTextColor(Color.WHITE);
 
         // Initialize spinners, search button, and lists of selected filters
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
         intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
         typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
-        searchButton = (Button)findViewById(R.id.searchButton);
         selectedCuisines = new ArrayList<String>();
         selectedDiets = new ArrayList<String>();
-        selectedType = new ArrayList<String>();
+        selectedType = null;
         selectedIntolerances = new ArrayList<String>();
 
         queryEntryBox = (EditText)findViewById(R.id.queryEntryBox);
@@ -65,15 +64,16 @@ public class QueryEntryActivity extends AppCompatActivity
 
         // Configure listeners
         try {
+            Button searchButton = (Button) findViewById(R.id.searchButton);
             searchButton.setOnClickListener(this);
         } catch(Exception e) {
-            Log.d("setListener failure", e.toString());
+            Log.d("App", Arrays.toString(e.getStackTrace()));
         }
     }
 
     @Override
     public void onClick(View v) {
-        // Don't start the next activity until the user enters ingredients
+        // Don't start the next activity until the user enters a query
         if(queryEntryBox.getText().toString().equals("")) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
             builder1.setMessage("Please enter a search query.");
@@ -105,7 +105,6 @@ public class QueryEntryActivity extends AppCompatActivity
     @Override
     public void onItemsSelected(View v, boolean[] selected) {
         for(int k = 0; k < selected.length; k++) {
-
             switch (v.getId()) {
                 case R.id.cuisineSpinner:
                     if (selected[k]) {
@@ -124,7 +123,7 @@ public class QueryEntryActivity extends AppCompatActivity
                     break;
                 case R.id.typeSpinner:
                     if (selected[k]) {
-                        selectedType.add(typeSpinner.getItems()[k]);
+                        selectedType = typeSpinner.getItems()[k];
                     }
             }
         }
