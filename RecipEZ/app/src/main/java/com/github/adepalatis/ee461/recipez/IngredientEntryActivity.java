@@ -5,8 +5,11 @@ package com.github.adepalatis.ee461.recipez;
  */
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +17,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -55,7 +60,23 @@ public class IngredientEntryActivity extends AppCompatActivity
         }
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.ingredient_search_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {
+        switch (menuItem.getItemId()) {
+            case R.id.switch_to_query:
+                startActivity(new Intent(this, QueryEntryActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +88,11 @@ public class IngredientEntryActivity extends AppCompatActivity
         // Initialize list of selected ingredients, ingredient entry field, and button
         ingredientsGrid = (GridView) findViewById(R.id.selectedIngredientsGrid);
         Button searchButton = (Button) findViewById(R.id.searchButton);
+        searchButton.setBackgroundColor(Color.WHITE);
         addButton = (Button) findViewById(R.id.addButton);
         selectedIngredients = new ArrayList<>();
 
-        Button dummy = (Button) findViewById(R.id.button);
+        //Button dummy = (Button) findViewById(R.id.button);
 
         ingredientEntryBox = (AutoCompleteTextView) findViewById(R.id.ingredientEntryBox);
         final List<String> toDisplay = new ArrayList<>();
@@ -145,7 +167,7 @@ public class IngredientEntryActivity extends AppCompatActivity
             addButton.setOnClickListener(this);
             ingredientsGrid.setOnItemClickListener(new IngredientClickListener());
             findViewById(R.id.signOutButton).setOnClickListener(this);
-            dummy.setOnClickListener(this);
+            //dummy.setOnClickListener(this);
         } catch (Exception e) {
             Log.d("Aoo", Arrays.toString(e.getStackTrace()));
         }
@@ -191,9 +213,9 @@ public class IngredientEntryActivity extends AppCompatActivity
                 break;
 
             // DUMMY BUTTON FOR TRANSITIONING TO QUERYENTRYACTIVITY
-            case R.id.button:
-                startActivity(new Intent(this, QueryEntryActivity.class));
-                break;
+            //case R.id.button:
+            //    startActivity(new Intent(this, QueryEntryActivity.class));
+            //    break;
         }
     }
 

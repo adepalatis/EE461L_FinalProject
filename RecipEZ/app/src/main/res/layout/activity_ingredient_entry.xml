@@ -82,15 +82,8 @@
                 android:text="Find Recipes"
                 android:id="@+id/searchButton"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
-                android:layout_alignTop="@+id/searchButton"
-                android:layout_toStartOf="@+id/searchButton" />
+                android:layout_centerHorizontal="true"
+                android:padding="20dip"/>
 
         </RelativeLayout>
 

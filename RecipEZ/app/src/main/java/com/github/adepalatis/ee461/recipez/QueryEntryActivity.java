@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -43,7 +44,8 @@ public class QueryEntryActivity extends AppCompatActivity
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Initialize spinners, search button, and lists of selected filters
         cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
         dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
@@ -71,6 +73,17 @@ public class QueryEntryActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {
+        switch (menuItem.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+    }
     @Override
     public void onClick(View v) {
         // Don't start the next activity until the user enters a query
