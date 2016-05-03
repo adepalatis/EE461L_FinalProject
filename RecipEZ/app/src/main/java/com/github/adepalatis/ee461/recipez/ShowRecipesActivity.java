@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -74,15 +75,23 @@ public class ShowRecipesActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 try {
+                                    List<RecipeSearchResult> rsr;
+
                                     if (q != null) {
-                                        List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, true);
+                                        rsr = api.parseRecipeSearchResultJson(res, true);
                                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                    } else {
+                                        rsr = api.parseRecipeSearchResultJson(res, false);
+                                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                    }
+
+                                    if (rsr != null && rsr.size() > 0) {
                                         recipeCount.setText(String.format("%d recipe(s)", rsr.size()));
                                     } else {
-                                        List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, false);
-                                        recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
-                                        recipeCount.setText(String.format("%d recipe(s)", rsr.size()));
+                                        hideProgress();
+                                        new AlertDialog.Builder(self).setMessage("No recipes found").show();
                                     }
+
                                 } catch (IOException e) {
                                     Log.d("App", Arrays.toString(e.getStackTrace()));
                                 }
