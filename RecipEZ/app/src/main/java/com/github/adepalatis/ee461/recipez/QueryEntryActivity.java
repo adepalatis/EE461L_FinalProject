@@ -104,19 +104,37 @@ public class QueryEntryActivity extends AppCompatActivity
 
     @Override
     public void onItemsSelected(View v, boolean[] selected) {
+        boolean clearedCuisines = false;
+        boolean clearedDiets = false;
+        boolean clearedIntolerances = false;
+        boolean clearedType = false;
+
         for(int k = 0; k < selected.length; k++) {
             switch (v.getId()) {
                 case R.id.cuisineSpinner:
+                    if(!clearedCuisines) {
+                        selectedCuisines.clear();
+                        clearedCuisines = true;
+                    }
                     if (selected[k]) {
                         selectedCuisines.add(cuisineSpinner.getItems()[k]);
                     }
+
                     break;
                 case R.id.dietSpinner:
+                    if(!clearedDiets) {
+                        selectedDiets.clear();
+                        clearedDiets = true;
+                    }
                     if (selected[k]) {
                         selectedDiets.add(dietSpinner.getItems()[k]);
                     }
                     break;
                 case R.id.intoleranceSpinner:
+                    if(!clearedIntolerances) {
+                        selectedIntolerances.clear();
+                        clearedIntolerances = true;
+                    }
                     if (selected[k]) {
                         selectedIntolerances.add(intoleranceSpinner.getItems()[k]);
                     }

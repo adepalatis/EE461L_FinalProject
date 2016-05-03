@@ -91,17 +91,17 @@ public class FoodAPI {
             url += "query=" + query;
 
             String cuisine = rsp.getCuisine();
-            if (cuisine != null) {
+            if (cuisine != null && !cuisine.equals("") && !cuisine.equals("Any")) {
                 url += "&cuisine=" + cuisine;
             }
 
             String diet = rsp.getDiet();
-            if (diet != null) {
+            if (diet != null && !diet.equals("") && !diet.equals("N/A")) {
                 url += "&diet=" + diet;
             }
 
             String intol = rsp.getIntolerance();
-            if (intol != null) {
+            if (intol != null && !intol.equals("") && !intol.equals("N/A")) {
                 url += "&intolerances=" + intol;
             }
 
@@ -119,8 +119,8 @@ public class FoodAPI {
             }
 
             String type = rsp.getType();
-            if (type != null) {
-                url += "&type" + type;
+            if (type != null && !type.equals("N/A") && !type.equals("")) {
+                url += "&type=" + type;
             }
 
             httpGetRequest(url, c);
