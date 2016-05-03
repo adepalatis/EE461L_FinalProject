@@ -37,8 +37,9 @@ public class ShowRecipesActivity extends AppCompatActivity {
 
     ListView recipeList;
     TextView recipeCount;
-    ProgressDialog progress;
     Activity self = this;
+    ProgressDialog progress;
+    boolean progressHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,6 @@ public class ShowRecipesActivity extends AppCompatActivity {
                                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
                                         recipeCount.setText(String.format("%d recipe(s)", rsr.size()));
                                     }
-                                    progress.hide();
                                 } catch (IOException e) {
                                     Log.d("App", Arrays.toString(e.getStackTrace()));
                                 }
@@ -96,6 +96,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                     progress.setMessage("Searching for recipes");
                     progress.setIndeterminate(true);
                     progress.show();
+                    progressHidden = false;
                     api.searchRecipes(rsp, c);
                 } catch (Exception e) {
                     Log.d("App", Arrays.toString(e.getStackTrace()));
@@ -128,4 +129,10 @@ public class ShowRecipesActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void hideProgress() {
+        if (!progressHidden) {
+            progress.hide();
+            progressHidden = true;
+        }
+    }
 }

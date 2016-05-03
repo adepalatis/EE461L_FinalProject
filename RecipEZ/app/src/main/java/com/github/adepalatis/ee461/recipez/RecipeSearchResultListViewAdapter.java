@@ -53,6 +53,7 @@ public class RecipeSearchResultListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int index, View convertView, ViewGroup parent) {
+        ((ShowRecipesActivity) c).hideProgress();
 
         if (convertView == null) {
             convertView = newView();

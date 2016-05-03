@@ -109,6 +109,7 @@ public class QueryEntryActivity extends AppCompatActivity
         RSP.setDiet(selectedDiets);
         RSP.setType(selectedType);
         RSP.setIntolerance(selectedIntolerances);
+        RSP.setMaxNumber(99);
         RSP.setExcludeIngredients(new ArrayList<Ingredient>());
         Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
         nextActivity.putExtra("RSP", RSP);

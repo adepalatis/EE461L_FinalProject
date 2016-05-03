@@ -200,7 +200,7 @@ public class IngredientEntryActivity extends AppCompatActivity
                     ingredients.add(new Ingredient(name));
                 }
                 RecipeSearchParameters rsp = new RecipeSearchParameters(ingredients, 1);
-                rsp.setMaxNumber(30);
+                rsp.setMaxNumber(99);
                 rsp.setIngredientLists(true);
 
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
