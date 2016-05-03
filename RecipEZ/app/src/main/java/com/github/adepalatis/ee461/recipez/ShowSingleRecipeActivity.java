@@ -2,6 +2,7 @@ package com.github.adepalatis.ee461.recipez;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -42,6 +43,7 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
     TableLayout table;
     Recipe r;
     Activity self = this;
+    ProgressDialog progress;
 
     //used for back button
     @Override
@@ -131,6 +133,8 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                                     } else {
                                         findViewById(R.id.usedTV).setVisibility(View.GONE);
                                     }
+
+                                    progress.hide();
                                 } catch (Exception e) {
                                     Log.d("App", Arrays.toString(e.getStackTrace()));
                                 }
@@ -139,6 +143,10 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                     }
                 };
 
+                progress = new ProgressDialog(this);
+                progress.setMessage("Getting your recipe");
+                progress.setIndeterminate(true);
+                progress.show();
                 FoodAPI.getInstance().getRecipe(recipeId, true, c);
             } catch (Exception e) {
                 Log.d("Error", e.toString());

@@ -1,6 +1,7 @@
 package com.github.adepalatis.ee461.recipez;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -34,6 +35,7 @@ import okhttp3.Response;
 public class ShowRecipesActivity extends AppCompatActivity {
 
     ListView recipeList;
+    ProgressDialog progress;
     Activity self = this;
 
     @Override
@@ -75,6 +77,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
                                         List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, false);
                                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
                                     }
+                                    progress.hide();
                                 } catch (IOException e) {
                                     Log.d("App", Arrays.toString(e.getStackTrace()));
                                 }
@@ -84,6 +87,10 @@ public class ShowRecipesActivity extends AppCompatActivity {
                 };
 
                 try {
+                    progress = new ProgressDialog(this);
+                    progress.setMessage("Searching for recipes");
+                    progress.setIndeterminate(true);
+                    progress.show();
                     api.searchRecipes(rsp, c);
                 } catch (Exception e) {
                     Log.d("App", Arrays.toString(e.getStackTrace()));
