@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
@@ -63,10 +65,7 @@ public class RecipeSearchResultListViewAdapter extends BaseAdapter {
 
         try {
             String url = getItem(index).image.contains("https") ? getItem(index).image : "https://spoonacular.com/recipeImages/" + getItem(index).image;
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, getItem(index).title);
-
-            e.img.setImageDrawable(d);
+            Picasso.with(c).load(url).into(e.img);
             e.title.setText(getItem(index).title);
         } catch (Exception e1) {
             Log.d("App", Arrays.toString(e1.getStackTrace()));

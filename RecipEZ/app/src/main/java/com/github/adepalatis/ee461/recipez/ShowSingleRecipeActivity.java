@@ -24,6 +24,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -108,9 +110,7 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                             public void run() {
                                 try {
                                     String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
-                                    InputStream is = (InputStream) new URL(url).getContent();
-                                    Drawable d = Drawable.createFromStream(is, r.title);
-                                    recipeImage.setImageDrawable(d);
+                                    Picasso.with(self).load(url).into(recipeImage);
 
                                     recipeTitle.setText(r.title);
                                     servings.setText(r.servings.toString());
