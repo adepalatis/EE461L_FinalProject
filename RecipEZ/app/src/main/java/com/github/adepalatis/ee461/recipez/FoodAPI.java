@@ -92,17 +92,17 @@ public class FoodAPI {
 
             String cuisine = rsp.getCuisine();
             if (cuisine != null && !cuisine.equals("") && !cuisine.equals("Any")) {
-                url += "&cuisine=" + cuisine;
+                url += "&cuisine=" + cuisine.replace(" ", "+");
             }
 
             String diet = rsp.getDiet();
             if (diet != null && !diet.equals("") && !diet.equals("N/A")) {
-                url += "&diet=" + diet;
+                url += "&diet=" + diet.replace(" ", "+");
             }
 
             String intol = rsp.getIntolerance();
             if (intol != null && !intol.equals("") && !intol.equals("N/A")) {
-                url += "&intolerances=" + intol;
+                url += "&intolerances=" + intol.replace(" ", "+");
             }
 
             if (license != null) {
@@ -120,9 +120,10 @@ public class FoodAPI {
 
             String type = rsp.getType();
             if (type != null && !type.equals("N/A") && !type.equals("")) {
-                url += "&type=" + type;
+                url += "&type=" + type.replace(" ", "+");
             }
 
+            url.replace(" ", "+");
             httpGetRequest(url, c);
         } else {
             throw new IllegalArgumentException("Query cannot be null, or Ingredients and Ranking cannot both be null.");
