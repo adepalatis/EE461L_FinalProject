@@ -101,30 +101,40 @@ public class ShowSingleRecipeActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         r = FoodAPI.getInstance().parseRecipeJson(response);
 
-                        String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
-                        InputStream is = (InputStream) new URL(url).getContent();
-                        Drawable d = Drawable.createFromStream(is, r.title);
-                        recipeImage.setImageDrawable(d);
+                        self.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    String url = r.image.contains("https") ? r.image : "https://spoonacular.com/recipeImages/" + r.image;
+                                    InputStream is = (InputStream) new URL(url).getContent();
+                                    Drawable d = Drawable.createFromStream(is, r.title);
+                                    recipeImage.setImageDrawable(d);
 
-                        recipeTitle.setText(r.title);
-                        servings.setText(r.servings.toString());
-                        readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
+                                    recipeTitle.setText(r.title);
+                                    servings.setText(r.servings.toString());
+                                    readyIn.setText(r.readyInMinutes.toString() + " " + getString(R.string.minutes));
 
-                        if(usedIngredients != null && !usedIngredients.isEmpty()) {
-                            IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
-                            m.setInflater(self);
-                            missing.setAdapter(m);
+                                    if(usedIngredients != null && !usedIngredients.isEmpty()) {
+                                        IngredientsListViewAdapter m = new IngredientsListViewAdapter(getIngredients(missingIngredients));
+                                        m.setInflater(self);
+                                        missing.setAdapter(m);
 
-                            IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
-                            u.setInflater(self);
-                            used.setAdapter(u);
-                        } else {
-                            findViewById(R.id.missingTV).setVisibility(View.GONE);
-                            findViewById(R.id.usedTV).setVisibility(View.GONE);
-                        }
+                                        IngredientsListViewAdapter u = new IngredientsListViewAdapter(getIngredients(usedIngredients));
+                                        u.setInflater(self);
+                                        used.setAdapter(u);
+                                    } else {
+                                        Log.d("App", "Hide ingredient lists");
+                                        findViewById(R.id.missingTV).setVisibility(View.GONE);
+                                        findViewById(R.id.usedTV).setVisibility(View.GONE);
+                                    }
 
-                        justifyListViewHeightBasedOnChildren(missing);
-                        justifyListViewHeightBasedOnChildren(used);
+                                    justifyListViewHeightBasedOnChildren(missing);
+                                    justifyListViewHeightBasedOnChildren(used);
+                                } catch (Exception e) {
+                                    Log.d("App", Arrays.toString(e.getStackTrace()));
+                                }
+                            }
+                        });
                     }
                 };
 

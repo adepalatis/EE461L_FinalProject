@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class RecipeSearchResultListViewAdapter extends BaseAdapter {
             e.img.setImageDrawable(d);
             e.title.setText(getItem(index).title);
         } catch (Exception e1) {
-            Log.d("Error", e1.toString());
+            Log.d("App", Arrays.toString(e1.getStackTrace()));
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
