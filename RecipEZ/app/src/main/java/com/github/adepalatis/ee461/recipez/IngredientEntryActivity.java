@@ -39,16 +39,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class IngredientEntryActivity extends AppCompatActivity
-        implements View.OnClickListener, AdapterView.OnItemSelectedListener, MultiSpinner.MultiSpinnerListener {
+        implements View.OnClickListener {
 
-    private MultiSpinner cuisineSpinner;
-    private MultiSpinner dietSpinner;
-    private MultiSpinner intoleranceSpinner;
-    private MultiSpinner typeSpinner;
-    private ArrayList<String> selectedCuisines;
-    private ArrayList<String> selectedDiets;
-    private ArrayList<String> selectedIntolerances;
-    private ArrayList<String> selectedType;
     private AutoCompleteTextView ingredientEntryBox;
     private GridView ingredientsGrid;
     private Button addButton;
@@ -72,19 +64,11 @@ public class IngredientEntryActivity extends AppCompatActivity
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        // Initialize spinner, list of selected ingredients, ingredient entry field, checkboxes, and button
-        cuisineSpinner = (MultiSpinner) findViewById(R.id.cuisineSpinner);
-        dietSpinner = (MultiSpinner) findViewById(R.id.dietSpinner);
-        intoleranceSpinner = (MultiSpinner) findViewById((R.id.intoleranceSpinner));
-        typeSpinner = (MultiSpinner) findViewById((R.id.typeSpinner));
+        // Initialize list of selected ingredients, ingredient entry field, and button
         ingredientsGrid = (GridView) findViewById(R.id.selectedIngredientsGrid);
         Button searchButton = (Button) findViewById(R.id.searchButton);
         addButton = (Button) findViewById(R.id.addButton);
         selectedIngredients = new ArrayList<>();
-        selectedCuisines = new ArrayList<>();
-        selectedDiets = new ArrayList<>();
-        selectedType = new ArrayList<>();
-        selectedIntolerances = new ArrayList<>();
 
         Button dummy = (Button) findViewById(R.id.button);
 
@@ -165,55 +149,12 @@ public class IngredientEntryActivity extends AppCompatActivity
             searchButton.setOnClickListener(this);
             addButton.setOnClickListener(this);
             ingredientsGrid.setOnItemClickListener(new IngredientClickListener());
-            cuisineSpinner.setOnItemSelectedListener(this);
-            dietSpinner.setOnItemSelectedListener(this);
-            intoleranceSpinner.setOnItemSelectedListener(this);
-            typeSpinner.setOnItemSelectedListener(this);
             findViewById(R.id.signOutButton).setOnClickListener(this);
             dummy.setOnClickListener(this);
         } catch (Exception e) {
             Log.d("Aoo", Arrays.toString(e.getStackTrace()));
         }
-
-        // Configure the cuisine spinner
-        cuisineSpinner.setItems(getResources().getStringArray(R.array.cuisine_array), this);
-        dietSpinner.setItems(getResources().getStringArray(R.array.diet_array), this);
-        intoleranceSpinner.setItems(getResources().getStringArray(R.array.allergy_array), this);
-        typeSpinner.setItems(getResources().getStringArray(R.array.type), this);
     }
-
-    @Override
-    public void onItemsSelected(View v, boolean[] selected) {
-        for (int k = 0; k < selected.length; k++) {
-            switch (v.getId()) {
-                case R.id.cuisineSpinner:
-                    if (selected[k]) {
-                        selectedCuisines.add(cuisineSpinner.getItems()[k]);
-                    }
-                    break;
-                case R.id.dietSpinner:
-                    if (selected[k]) {
-                        selectedDiets.add(dietSpinner.getItems()[k]);
-                    }
-                    break;
-                case R.id.intoleranceSpinner:
-                    if (selected[k]) {
-                        selectedIntolerances.add(intoleranceSpinner.getItems()[k]);
-                    }
-                    break;
-                case R.id.typeSpinner:
-                    if (selected[k]) {
-                        selectedType.add(typeSpinner.getItems()[k]);
-                    }
-            }
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
 
     @Override
     public void onClick(View v) {
@@ -249,10 +190,10 @@ public class IngredientEntryActivity extends AppCompatActivity
                     ingredients.add(myIngredient);
                 }
                 RecipeSearchParameters RSP = new RecipeSearchParameters(ingredients);
-                RSP.setCuisine(selectedCuisines);
-                RSP.setDiet(selectedDiets);
-                RSP.setType(selectedType);
-                RSP.setIntolerance(selectedIntolerances);
+                RSP.setCuisine(new ArrayList<String>());
+                RSP.setDiet(new ArrayList<String>());
+                RSP.setType("");
+                RSP.setIntolerance(new ArrayList<String>());
                 RSP.setExcludeIngredients(new ArrayList<Ingredient>());
                 Intent nextActivity = new Intent(this, ShowRecipesActivity.class);
                 nextActivity.putExtra("RSP", RSP);

@@ -34,18 +34,9 @@
             android:textCursorDrawable="@null"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Find Recipes"
-            android:layout_marginTop="35dp"
-            android:id="@+id/searchButton"
-            android:layout_below="@+id/selectedIngredientsGrid"
-            android:layout_centerHorizontal="true" />
-
         <GridView
             android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_height="290dp"
             android:id="@+id/selectedIngredientsGrid"
             android:numColumns="4"
             android:horizontalSpacing="10dp"
@@ -82,100 +73,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#27ae60"
-            android:layout_below="@+id/searchButton"
-            android:id="@+id/relativeLayout">
-            <TextView
+            android:id="@+id/relativeLayout"
+            android:layout_below="@+id/selectedIngredientsGrid">
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Cuisine (Optional):"
-                android:id="@+id/textView"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="35dp"
-                android:textColor="#ffffff"
-                android:layout_marginLeft="15dp" />
+                android:text="Find Recipes"
+                android:id="@+id/searchButton"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Dietary Restrictions:"
-                android:id="@+id/textView2"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="40dp"
-                android:textColor="#ffffff"
-                android:layout_marginLeft="15dp" />
-
-            <com.github.adepalatis.ee461.recipez.MultiSpinner
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/cuisineSpinner"
-                android:scrollbarFadeDuration="0"
-                android:scrollbarAlwaysDrawVerticalTrack="true"
-                android:layout_alignBottom="@+id/textView"
-                android:layout_alignParentEnd="true" />
-
-
-            <com.github.adepalatis.ee461.recipez.MultiSpinner
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:scrollbarFadeDuration="0"
-                android:id="@+id/dietSpinner"
-                android:layout_alignBottom="@+id/textView2"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Intolerances:"
-                android:id="@+id/textView3"
-                android:layout_marginTop="40dp"
-                android:textColor="#ffffff"
-                android:layout_below="@+id/textView2"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="15dp" />
-
-            <com.github.adepalatis.ee461.recipez.MultiSpinner
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/intoleranceSpinner"
-                android:scrollbarFadeDuration="0"
-                android:layout_alignBottom="@+id/textView3"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Dish type:"
-                android:id="@+id/textView4"
-                android:layout_marginTop="40dp"
-                android:textColor="#ffffff"
-                android:layout_below="@+id/textView3"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="15dp" />
-
-            <com.github.adepalatis.ee461.recipez.MultiSpinner
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/typeSpinner"
-                android:scrollbarFadeDuration="0"
-                android:layout_below="@+id/intoleranceSpinner"
-                android:layout_alignStart="@+id/intoleranceSpinner"
-                android:layout_marginTop="36dp" />
+                android:text="New Button"
+                android:id="@+id/button"
+                android:layout_alignTop="@+id/searchButton"
+                android:layout_toStartOf="@+id/searchButton" />
 
         </RelativeLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"
-            android:layout_alignTop="@+id/searchButton"
-            android:layout_toStartOf="@+id/searchButton" />
 
 
     </RelativeLayout>
