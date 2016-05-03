@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.GridLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -35,6 +36,7 @@ import okhttp3.Response;
 public class ShowRecipesActivity extends AppCompatActivity {
 
     ListView recipeList;
+    TextView recipeCount;
     ProgressDialog progress;
     Activity self = this;
 
@@ -49,6 +51,7 @@ public class ShowRecipesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         recipeList = (ListView) findViewById(R.id.showRecipes);
+        recipeCount = (TextView) findViewById(R.id.recipeCount);
         Bundle data = getIntent().getExtras();
         if (data != null) {
             final RecipeSearchParameters rsp = data.getParcelable("RSP");
@@ -73,9 +76,11 @@ public class ShowRecipesActivity extends AppCompatActivity {
                                     if (q != null) {
                                         List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, true);
                                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                        recipeCount.setText(String.format("%d recipe(s)", rsr.size()));
                                     } else {
                                         List<RecipeSearchResult> rsr = api.parseRecipeSearchResultJson(res, false);
                                         recipeList.setAdapter(new RecipeSearchResultListViewAdapter(self, rsr));
+                                        recipeCount.setText(String.format("%d recipe(s)", rsr.size()));
                                     }
                                     progress.hide();
                                 } catch (IOException e) {

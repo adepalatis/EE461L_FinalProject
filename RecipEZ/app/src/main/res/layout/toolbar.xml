@@ -4,4 +4,15 @@
     android:id="@+id/my_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:theme="@style/ToolbarTheme" />
+    android:theme="@style/ToolbarTheme">
+
+    <TextView
+        android:id="@+id/recipeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:textSize="20sp"/>
+
+</android.support.v7.widget.Toolbar>
